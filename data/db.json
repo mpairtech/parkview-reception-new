@@ -1,0 +1,22 @@
+{
+  "userData": [
+    {
+      "id": 1,
+      "username": "345",
+      "email": "asianagency@gmail.com",
+      "role": "Vendor"
+    },
+    {
+      "id": 2,
+      "username": "365",
+      "email": "europeanagency@gmail.com",
+      "role": "Vendor"
+    },
+    {
+      "id": 3,
+      "username": "375",
+      "email": "africanagency@gmail.com",
+      "role": "Vendor"
+    }
+  ]
+}

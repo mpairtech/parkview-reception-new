@@ -1,0 +1,281 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500&display=swap");
+
+* {
+  font-family: "Roboto", sans-serif;
+}
+a {
+  text-decoration: none;
+}
+.canvasBoardDash {
+  min-height: 40.4rem;
+  padding-bottom: 1rem;
+}
+.canvasBoard {
+  background-color: #e4e9eb;
+  min-height: 40.8rem;
+}
+.menuCard {
+  height: 5rem;
+  border: 1px solid #195985;
+}
+.thead-color {
+  background-color: #195972;
+}
+.table-padding {
+  padding-left: 0.77rem !important;
+  padding-right: 0.77rem !important;
+}
+.table-font-size {
+  font-size: 0.9rem;
+}
+.designation-font {
+  font-size: 0.75rem;
+}
+.availableDocCanvas {
+  height: 20rem;
+}
+.roomNo {
+  background-color: #195972;
+  font-size: 1rem;
+  height: 2rem;
+}
+.availDocMargin {
+  margin-left: 0.09rem;
+  margin-right: 0.09rem;
+}
+.filterColor {
+  background-color: #c5d5ee;
+}
+.downButton {
+  background-color: #195972;
+}
+.downButton:hover,
+.downButton:active {
+  background-color: #15495d !important;
+}
+.patientFilter {
+  height: 17rem;
+}
+.patientInfoBoard {
+  min-height: 34rem;
+}
+.thBg {
+  background-color: #f2f2f2;
+}
+
+.activebtn {
+  background-color: #414141 !important;
+  color: white;
+}
+
+.cancelBtn {
+  background-color: #f35f41;
+}
+.cancelBtn:hover {
+  background-color: #be4d37 !important;
+}
+.infoHeight {
+  height: 2.4rem;
+}
+.docAppointListBoard {
+  height: 34rem;
+}
+
+.apponitIcon {
+  height: 1.3rem;
+}
+
+.appointHead {
+  background-color: #4dd8d8;
+}
+
+.appointBody {
+  background-color: #edf3e3;
+}
+.drOverviewCard {
+  min-height: 10.3rem;
+}
+.roomInfo {
+  width: 9rem;
+  background-color: #15495d;
+  font-size: 0.8rem;
+}
+.consultancyInfo {
+  width: 9rem;
+  background-color: #7ec322;
+  font-size: 0.8rem;
+}
+.chooseManualBtn {
+  height: 2.2rem;
+  font-size: 0.7rem;
+}
+.slNo {
+  background-color: #15495d;
+  width: 6rem;
+}
+.appointTime {
+  width: 8rem;
+  background-color: #7ec322;
+}
+.viewButton {
+  background-color: #7ec322;
+}
+.viewButton:hover,
+.viewButton:active {
+  background-color: #649b1d !important;
+}
+.reservButton {
+  background-color: #0078a7;
+}
+.reservButton:hover,
+.reservButton:active {
+  background-color: #00668f !important;
+}
+
+.btnMargin {
+  margin-top: 25rem;
+}
+
+.btnAdd {
+  width: 10rem;
+  background-color: #dfdfdf;
+}
+.btnAdd:hover,
+.btnAdd:active {
+  background-color: #acacac !important;
+}
+.appointSchButton {
+  flex: 0 0 auto;
+  width: 20%;
+}
+.changeSchButton {
+  flex: 0 0 auto;
+  width: 10%;
+}
+.changeSchButtonClick {
+  background-color: white;
+}
+.changeSchButtonClick:hover {
+  background-color: rgb(208, 208, 208) !important;
+}
+.appointSchButtonClick {
+  background-color: #dfdfdf;
+}
+.appointSchButtonClick:hover {
+  background-color: #acacac !important;
+}
+.reservedSche {
+  height: 18rem;
+  background-color: #e7eeef;
+}
+.appointedSche {
+  height: 2rem;
+  background-color: #ffb300;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.appointedSche:hover {
+  background-color: #d49500 !important;
+}
+
+.label-font {
+  color: #414141;
+  font-size: 0.9rem;
+}
+
+.deptDr {
+  background-color: #15495d;
+}
+.basicInfoFont {
+  font-size: 0.8rem;
+}
+.basInfoBorder {
+  border-bottom: 1px dashed #00668f;
+}
+.yellow-color-light {
+  background-color: #ffd788 !important;
+}
+.yellow-color {
+  background-color: #ffcc00 !important;
+}
+.secondary-color-2 {
+  background-color: #edf3e3 !important;
+}
+
+.loadingAnimation {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.sideModal {
+  position: fixed;
+  top: 0px;
+  right: -1000px;
+  bottom: 0px;
+  background-color: white;
+  width: 500px;
+  z-index: 4000;
+  transition: 0.5s;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+}
+
+.active {
+  right: 0px;
+}
+
+.side-back {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 1051;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.navactive {
+  border-bottom: 5px solid #555;
+}
+
+.dashboardNavActive {
+  border-bottom: 5px solid #15495d;
+}
+
+.hiddenTable {
+  position: absolute;
+  left: -5000px;
+}
+
+.catTable {
+  height: 24rem;
+  overflow-y: auto;
+}
+.thead-color-2 {
+  background-color: #565656;
+}
+
+.reqField {
+  color: rgb(255, 0, 0);
+  font-size: 0.7rem;
+}
+
+.doctorDP {
+  height: 6rem;
+  width: 6rem;
+  border: 2px solid black;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+}
+.modal-content {
+  border-radius: 0px !important;
+}
+.btn {
+  border-radius: 0px !important;
+}
