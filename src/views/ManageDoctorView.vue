@@ -185,7 +185,7 @@
 
   <!-- Modal Ends -->
 
-  <div class="canvasBoard" style="min-height: 37.6rem">
+  <div class="canvasBoard">
     <div class="container-fluid p-4">
       <div class="row">
         <div class="col-lg-9">
@@ -226,10 +226,14 @@
                       <th class="fw-normal" scope="col" width="20%">
                         Designation
                       </th>
-                      <th class="fw-normal" scope="col" width="10%">Department</th>
+                      <th class="fw-normal" scope="col" width="10%">
+                        Department
+                      </th>
                       <th class="fw-normal" scope="col" width="10%">Room</th>
                       <th class="fw-normal" scope="col" width="10%">Fee</th>
-                      <th class="fw-normal" scope="col" width="20%">Available</th>
+                      <th class="fw-normal" scope="col" width="20%">
+                        Available
+                      </th>
                       <th class="fw-normal" scope="col" width="10">Action</th>
                     </tr>
                   </thead>
@@ -268,35 +272,33 @@
                         </td>
 
                         <td class="designation-font">
+                          <button
+                            class="btn viewButton rounded-pill designation-font w-100 text-white"
+                            @click="
+                              toggleModaldr();
+                              this.activeDoc = doc.id;
+                              this.update = 1;
+                            "
+                          >
+                            View
+                          </button>
 
-                              <button
-                                class="btn viewButton rounded-pill designation-font w-100 text-white"
-                                @click="
-                                  toggleModaldr();
-                                  this.activeDoc = doc.id;
-                                  this.update = 1;
-                                "
-                              >
-                                View
-                              </button>
+                          <router-link :to="`/editdoctor/${doc.id}`"
+                            ><button
+                              class="btn downButton rounded-pill designation-font w-100 text-white"
+                            >
+                              Edit
+                            </button></router-link
+                          >
 
-                              <router-link :to="`/editdoctor/${doc.id}`"
-                                ><button
-                                  class="btn downButton rounded-pill designation-font w-100 text-white"
-                                >
-                                  Edit
-                                </button></router-link
-                              >
-
-                              <button
-                                class="btn btn-danger rounded-pill designation-font w-100 text-white"
-                                @click="this.delid = doc.id"
-                                data-bs-toggle="modal"
-                                data-bs-target="#deleteConfirmModal"
-                              >
-                                Delete
-                              </button>
- 
+                          <button
+                            class="btn btn-danger rounded-pill designation-font w-100 text-white"
+                            @click="this.delid = doc.id"
+                            data-bs-toggle="modal"
+                            data-bs-target="#deleteConfirmModal"
+                          >
+                            Delete
+                          </button>
                         </td>
                       </template>
                     </tr>
@@ -358,12 +360,14 @@
       </div>
     </div>
   </div>
+
+  <Footer />
 </template>
 <script>
 import TopNav from '../components/TopNav.vue';
 import DashboardNav from '../components/DashboardNav.vue';
 import Modal from '@/components/Modal.vue';
-
+import Footer from '@/components/Footer.vue';
 import { ref } from 'vue';
 import BasicInfo from '@/components/BasicInfo.vue';
 import ConsultancyPeriod from '../components/ConsultancyPeriod.vue';
@@ -475,7 +479,7 @@ export default {
 
     getAppointment() {
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/getAppointmentList',
+        'http://server.parkviewappointment.com/parkview/reception/getAppointment',
         {
           method: 'POST',
         }
@@ -606,7 +610,7 @@ export default {
     TopNav,
     DashboardNav,
     Modal,
-
+    Footer,
     BasicInfo,
     ConsultancyPeriod,
     UserInfo,

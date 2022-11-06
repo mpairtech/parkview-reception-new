@@ -61,7 +61,7 @@
                   class="form-select rounded-0 border-dark mx-auto"
                   v-model="deptSelect"
                 >
-                <option value="">Choose Dept.</option>
+                  <option value="">Choose Dept.</option>
                   <option v-for="dept in department">
                     {{ dept.department }}
                   </option>
@@ -134,7 +134,7 @@
                   class="form-select form-select-sm rounded-0 border-dark"
                   v-model="docDeptSelect"
                 >
-                <option value="">Choose Dept.</option>
+                  <option value="">Choose Dept.</option>
                   <option v-for="dept in department">
                     {{ dept.department }}
                   </option>
@@ -146,20 +146,19 @@
               v-for="docs in filteredDoc"
             >
               <template v-if="docs.department.includes(this.docDeptSelect)">
-                <div class="col-lg-8 ">
+                <div class="col-lg-8">
                   <p class="m-0 fw-bold">
                     {{ docs.doctor }}
                   </p>
                   <p class="m-0 designation-font">
-                    <b>{{ docs.department }}</b><br/>
+                    <b>{{ docs.department }}</b
+                    ><br />
                     {{ docs.qualification }}
-<br />({{ docs.session }})
+                    <br />({{ docs.session }})
                   </p>
                 </div>
                 <div class="col-lg-4">
-                  <div
-                    class="roomNo rounded-pill text-white text-center"
-                  >
+                  <div class="roomNo rounded-pill text-white text-center">
                     <i class="fa-solid fa-door-open py-2"></i> {{ docs.room }}
                   </div>
                 </div></template
@@ -170,10 +169,13 @@
       </div>
     </div>
   </div>
+
+  <Footer />
 </template>
 
 <script>
 import TopNav from '../components/TopNav.vue';
+import Footer from '@/components/Footer.vue';
 export default {
   data() {
     return {
@@ -190,7 +192,7 @@ export default {
     };
   },
   name: 'DashboardView',
-  components: { TopNav },
+  components: { TopNav, Footer },
 
   mounted() {
     this.getDoctorlist();

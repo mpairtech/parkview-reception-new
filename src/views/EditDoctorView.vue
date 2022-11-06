@@ -43,7 +43,7 @@
     </div>
   </div>
 
-  <div class="canvasBoard" style="min-height: 38rem">
+  <div class="canvasBoard">
     <div class="container-fluid p-4">
       <div class="row">
         <div class="col-lg-11 mx-auto bg-white">
@@ -99,9 +99,9 @@
                             ]"
                             class="doctorDP"
                             alt="..."
-                        />
-                        <p v-if="image == ''">Choose Photo</p>
-                      </label>
+                          />
+                          <p v-if="image == ''">Choose Photo</p>
+                        </label>
                         <input
                           class="form-control form-control-sm rounded-0 border-dark"
                           type="file"
@@ -196,25 +196,21 @@
                       }}</small>
                     </div>
 
-
                     <div class="mb-2">
                       <label for="" class="form-label"
                         >Advanced Reservation</label
                       >
-                      
 
-                      <select 
-                      class="form-control form-control-sm rounded-0 border-dark"
-                      v-model="advanced">
+                      <select
+                        class="form-control form-control-sm rounded-0 border-dark"
+                        v-model="advanced"
+                      >
                         <option value="0">Same Day</option>
                         <option value="2">Three Days Ago</option>
                         <option value="4">Five Days Ago</option>
                         <option value="6">Seven Days Ago</option>
                       </select>
-                      
                     </div>
-
-
                   </div>
                   <div class="col-lg-2">
                     <button
@@ -320,10 +316,11 @@
       </div>
     </div>
   </div>
+  <FooterVue />
 </template>
 <script>
 import TopNav from '../components/TopNav.vue';
-
+import FooterVue from '@/components/Footer.vue';
 import DashboardNav from '../components/DashboardNav.vue';
 
 import { useToast } from 'vue-toastification';
@@ -354,7 +351,7 @@ export default {
       image: '',
       max: '',
       message: '',
-      advanced:"",
+      advanced: '',
       days: ['SAT', 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI'],
     };
   },
@@ -589,7 +586,7 @@ export default {
       data.append('fee', this.consFee);
       data.append('max', this.maxCons);
       data.append('min', this.minCons);
-      data.append("advanced",this.advanced)
+      data.append('advanced', this.advanced);
 
       fetch(
         'http://server.parkviewappointment.com/parkview/reception/updateDoctor',
@@ -617,6 +614,7 @@ export default {
   components: {
     TopNav,
     DashboardNav,
+    FooterVue,
   },
 };
 </script>

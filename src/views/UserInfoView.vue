@@ -53,8 +53,6 @@
               placeholder="********"
             />
           </div>
-
-
         </div>
         <div class="modal-footer">
           <button
@@ -64,11 +62,7 @@
           >
             Close
           </button>
-          <button
-            type="button"
-            @click="updatePass"
-            class="btn btn-primary"
-          >
+          <button type="button" @click="updatePass" class="btn btn-primary">
             Save changes
           </button>
         </div>
@@ -124,19 +118,21 @@
       </div>
     </div>
   </div>
+  <FooterVue />
 </template>
 <script>
 import TopNav from '@/components/TopNav.vue';
 import DashboardNav from '@/components/DashboardNav.vue';
+import FooterVue from '@/components/Footer.vue';
 import { useToast } from 'vue-toastification';
 export default {
-  components: { TopNav, DashboardNav },
+  components: { TopNav, DashboardNav, FooterVue },
   data() {
     return {
       recInfo: [],
-      oldpass:"",
-      newpass:"",
-      rnewpass:"",
+      oldpass: '',
+      newpass: '',
+      rnewpass: '',
     };
   },
   setup() {
@@ -145,11 +141,10 @@ export default {
   },
   methods: {
     updatePass() {
-
-      if(this.newpass != this.rnewpass){
+      if (this.newpass != this.rnewpass) {
         this.toast.error('Password do not match', {
-            timeout: 4000,
-          });
+          timeout: 4000,
+        });
         return false;
       }
       const data = new FormData();
@@ -167,11 +162,9 @@ export default {
         .then((res) => res.json())
         .then((res) => {
           if (res.message == true) {
-
             this.toast.success('Receptionist Password Updated', {
               timeout: 4000,
             });
-
           } else {
             this.toast.success(res.message, {
               timeout: 4000,

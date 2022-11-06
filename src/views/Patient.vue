@@ -20,7 +20,6 @@
           Are You sure you want to Delete this user ?
         </div>
         <div class="modal-footer">
-
           <button
             type="button"
             class="btn btn-primary"
@@ -92,9 +91,10 @@
                     />
                   </div>
 
-
                   <div class="mb-1 px-3">
-                    <label class="form-label mb-0 mt-2 text-secondary"><small>E-mail</small></label>
+                    <label class="form-label mb-0 mt-2 text-secondary"
+                      ><small>E-mail</small></label
+                    >
                     <input
                       type="email"
                       class="form-control form-control-sm rounded-0 border-dark"
@@ -106,7 +106,9 @@
                   </div>
 
                   <div class="mb-1 px-3">
-                    <label class="form-label mb-0 mt-2 text-secondary"><small>Gender</small></label>
+                    <label class="form-label mb-0 mt-2 text-secondary"
+                      ><small>Gender</small></label
+                    >
                     <select
                       type="email"
                       class="form-control form-control-sm rounded-0 border-dark"
@@ -154,36 +156,57 @@
                 </div>
               </div>
               <div class="col-lg-9">
-                <div class="userDataCard bg-light" >
-                  <div class="d-flex align-items-center justify-content-between">
+                <div class="userDataCard bg-light">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
                     <p class="m-0 fw-bold px-3 py-2">User List</p>
 
                     <input
                       type="text"
                       v-model="searchTerm"
                       placeholder="Search by ID, Mobile Number"
-                      style="height: 2rem; width: 30rem; font-size: 14px;"
+                      style="height: 2rem; width: 30rem; font-size: 14px"
                     />
 
-                    <input type="month" v-model="searchDate"
-                    style="height: 2rem; font-size: 14px;" />
+                    <input
+                      type="month"
+                      v-model="searchDate"
+                      style="height: 2rem; font-size: 14px"
+                    />
                   </div>
 
-                  <div class="userlist"  style="height:33.7rem; overflow: auto; font-size: small;">
-                    <table class="table text-center align-middle mb-1" >
-                      <thead class="text-center thead-color-2 text-white" style="position: sticky;top: 0">
+                  <div
+                    class="userlist"
+                    style="height: 33.7rem; overflow: auto; font-size: small"
+                  >
+                    <table class="table text-center align-middle mb-1">
+                      <thead
+                        class="text-center thead-color-2 text-white"
+                        style="position: sticky; top: 0"
+                      >
                         <tr>
                           <th class="fw-normal" scope="col" width="5%">Id</th>
-                          <th class="fw-normal" scope="col"  width="25%">Name</th>
-                          <th class="fw-normal" scope="col"  width="12%">Mobile</th>
+                          <th class="fw-normal" scope="col" width="25%">
+                            Name
+                          </th>
+                          <th class="fw-normal" scope="col" width="12%">
+                            Mobile
+                          </th>
                           <th class="fw-normal" scope="col" width="13%">NID</th>
-                          <th class="fw-normal" scope="col"  width="20%">Email</th>
+                          <th class="fw-normal" scope="col" width="20%">
+                            Email
+                          </th>
 
-                          <th class="fw-normal" scope="col"  width="10%">Gender</th>
-                          <th class="fw-normal" scope="col"  width="15%">Action</th>
+                          <th class="fw-normal" scope="col" width="10%">
+                            Gender
+                          </th>
+                          <th class="fw-normal" scope="col" width="15%">
+                            Action
+                          </th>
                         </tr>
                       </thead>
-                      <tbody class="border-0" >
+                      <tbody class="border-0">
                         <tr
                           class="bg-light border border-1 border-bottom border-white"
                           v-for="user in filteredList"
@@ -303,34 +326,37 @@
       </div>
     </div>
   </div>
+
+  <FooterVue />
 </template>
 <script>
-import TopNav from "@/components/TopNav.vue";
-import DashboardNav from "@/components/DashboardNav.vue";
-// import Loading from "@/common/Loading.vue";
-import { useToast } from "vue-toastification";
+import TopNav from '@/components/TopNav.vue';
+import DashboardNav from '@/components/DashboardNav.vue';
+
+import { useToast } from 'vue-toastification';
+import FooterVue from '@/components/Footer.vue';
 export default {
-  components: { TopNav, DashboardNav },
+  components: { TopNav, DashboardNav, FooterVue },
   data() {
     return {
       userData: [],
-      name: "",
-      mobile: "",
-      nid:"",
-      email: "",
-      gender: "",
-      password: "",
-      rpassword: "",
+      name: '',
+      mobile: '',
+      nid: '',
+      email: '',
+      gender: '',
+      password: '',
+      rpassword: '',
       update: 0,
-      delid: "",
+      delid: '',
       preloader: true,
-      message: "",
-      gender: "",
-      oldpass: "",
-      newpass: "",
-      rnewpass: "",
-      searchTerm: "",
-      searchDate: "",
+      message: '',
+      gender: '',
+      oldpass: '',
+      newpass: '',
+      rnewpass: '',
+      searchTerm: '',
+      searchDate: '',
     };
   },
   setup() {
@@ -347,30 +373,30 @@ export default {
   },
   methods: {
     clearFields() {
-      this.name = "";
-      this.mobile = "";
-      this.email = "";
-      this.password = "";
-      this.rnewpass = "";
-      this.nid = "";
+      this.name = '';
+      this.mobile = '';
+      this.email = '';
+      this.password = '';
+      this.rnewpass = '';
+      this.nid = '';
     },
     newPatient() {
       if (this.password != this.rpassword) {
-        alert("Password do not match");
+        alert('Password do not match');
         return false;
       }
       const data = new FormData();
-      data.append("name", this.name);
-      data.append("mobile", this.mobile);
-      data.append("nid",this.nid);
-      data.append("email", this.email);
-      data.append("gender", this.gender);
-      data.append("password", this.password);
+      data.append('name', this.name);
+      data.append('mobile', this.mobile);
+      data.append('nid', this.nid);
+      data.append('email', this.email);
+      data.append('gender', this.gender);
+      data.append('password', this.password);
 
       fetch(
-        "http://server.parkviewappointment.com/parkview/patient/newPatient",
+        'http://server.parkviewappointment.com/parkview/patient/newPatient',
         {
-          method: "POST",
+          method: 'POST',
           body: data,
         }
       )
@@ -392,11 +418,11 @@ export default {
     },
     delUser(id) {
       const data = new FormData();
-      data.append("id", id);
+      data.append('id', id);
       fetch(
-        "http://server.parkviewappointment.com/parkview/admin/deletePatient",
+        'http://server.parkviewappointment.com/parkview/admin/deletePatient',
         {
-          method: "POST",
+          method: 'POST',
           body: data,
         }
       )
@@ -409,9 +435,9 @@ export default {
 
     getUser() {
       fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getPatient",
+        'http://server.parkviewappointment.com/parkview/reception/getPatient',
         {
-          method: "POST",
+          method: 'POST',
         }
       )
         .then((res) => res.json())
@@ -423,43 +449,43 @@ export default {
     },
 
     updatePass() {
-      if (this.oldpass == "") {
-        this.toast.success("Password field is empty", {
+      if (this.oldpass == '') {
+        this.toast.success('Password field is empty', {
           timeout: 4000,
         });
         return false;
       }
 
-      if (this.newpass == "") {
-        this.toast.success("New Password field is empty", {
+      if (this.newpass == '') {
+        this.toast.success('New Password field is empty', {
           timeout: 4000,
         });
         return false;
       }
 
       if (this.newpass != this.rnewpass) {
-        this.toast.warning("Password do not match", {
+        this.toast.warning('Password do not match', {
           timeout: 4000,
         });
         return false;
       }
 
       const data = new FormData();
-      data.append("opass", this.oldpass);
-      data.append("pass", this.newpass);
-      data.append("uid", this.delid);
+      data.append('opass', this.oldpass);
+      data.append('pass', this.newpass);
+      data.append('uid', this.delid);
 
       fetch(
-        "http://server.parkviewappointment.com/parkview/admin/updatepatientPass",
+        'http://server.parkviewappointment.com/parkview/admin/updatepatientPass',
         {
-          method: "POST",
+          method: 'POST',
           body: data,
         }
       )
         .then((res) => res.json())
         .then((res) => {
           if (res.message == true) {
-            this.toast.success("User Password Updated", {
+            this.toast.success('User Password Updated', {
               timeout: 4000,
             });
           } else {
@@ -475,8 +501,8 @@ export default {
   mounted() {
     this.getUser();
     var month = new Date().getMonth();
-    month = Number(month)+1;
-    this.searchDate = new Date().getFullYear() + "-" + month;
+    month = Number(month) + 1;
+    this.searchDate = new Date().getFullYear() + '-' + month;
   },
 
   computed: {
@@ -486,13 +512,14 @@ export default {
           post.id
             .toString()
             .toLowerCase()
-            .includes(this.searchTerm.toString().toLowerCase()) || post.mobile
+            .includes(this.searchTerm.toString().toLowerCase()) ||
+          post.mobile
             .toString()
             .toLowerCase()
             .includes(this.searchTerm.toString().toLowerCase())
         ) {
           return post;
-        } 
+        }
       });
     },
   },

@@ -56,7 +56,9 @@
                     </thead>
                     <tbody class="text-center">
                       <template v-for="appointment in filteredList">
-                        <tr class="border-bottom" style="font-size: small;"
+                        <tr
+                          class="border-bottom"
+                          style="font-size: small"
                           v-if="
                             appointment.department
                               .toString()
@@ -65,7 +67,8 @@
                               .toString()
                               .includes(this.fdate.toString())
                           "
-                        ><td class="border-0">{{ appointment.patientId }}</td>
+                        >
+                          <td class="border-0">{{ appointment.patientId }}</td>
                           <td class="border-0">{{ appointment.name }}</td>
                           <td class="border-0">{{ appointment.doctor }}</td>
                           <td class="border-0">{{ appointment.department }}</td>
@@ -155,13 +158,15 @@
       </div>
     </div>
   </div>
+  <FooterVue />
 </template>
 <script>
 import TopNav from '../components/TopNav.vue';
 import DashboardNav from '../components/DashboardNav.vue';
+import FooterVue from '@/components/Footer.vue';
 export default {
   name: 'PatientView',
-  components: { TopNav, DashboardNav },
+  components: { TopNav, DashboardNav, FooterVue },
 
   data() {
     return {
@@ -227,7 +232,6 @@ export default {
         .then((res) => res.json())
         .then((res) => {
           this.appointments = res.appointment;
-          
         })
         .catch((err) => console.log(err));
     },
@@ -256,12 +260,12 @@ export default {
           post.name
             .toString()
             .toLowerCase()
-            .includes(this.appointSearch.toString().toLowerCase()) || post.patientId
-              .toString()
-              .toLowerCase()
-              .includes(this.appointSearch.toString().toLowerCase())
-        )
-        {
+            .includes(this.appointSearch.toString().toLowerCase()) ||
+          post.patientId
+            .toString()
+            .toLowerCase()
+            .includes(this.appointSearch.toString().toLowerCase())
+        ) {
           return post;
         }
       });

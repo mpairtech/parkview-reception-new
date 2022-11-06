@@ -99,7 +99,7 @@
                           </select>
                         </div>
                         <div class="mb-2">
-                          <div class="row"> 
+                          <div class="row">
                             <div class="col-lg-12">
                               <label class="form-label mb-1 label-font"
                                 >Choose Doctor</label
@@ -120,17 +120,15 @@
                                 </template>
                               </select>
                             </div>
-
-                            </div>
-                            </div>
-                            <div class="mb-2">
-                              <div class="row">
-
+                          </div>
+                        </div>
+                        <div class="mb-2">
+                          <div class="row">
                             <div class="col-lg-6">
                               <div class="mb-2">
                                 <label class="form-label mb-1 label-font"
-                                  >Day</label
-                                >
+                                  >Day
+                                </label>
                                 <select
                                   v-model="visitDay"
                                   class="form-select form-select-sm rounded-0 label-font"
@@ -185,8 +183,13 @@
                                 >Appointment Date</label
                               >
 
-                              <input class="form-control" type="date" v-model="visitDate" readonly/>
-<!-- 
+                              <input
+                                class="form-control"
+                                type="date"
+                                v-model="visitDate"
+                                readonly
+                              />
+                              <!-- 
                               <button
                                 @click="
                                   this.showDatepicker = !this.showDatepicker
@@ -358,46 +361,55 @@
   </div>
 
   <!-- <Loading :active="load"/> -->
+
+  <FooterVue />
 </template>
 <script>
-import TopNav from "../components/TopNav.vue";
-import DashboardNav from "../components/DashboardNav.vue";
-// import ModalSche from '@/components/ModalSche.vue';
-import { ref } from "vue";
-import ModalSche from "@/modal/modalSche.vue";
-import Loading from "@/common/loading.vue";
-import { useToast } from "vue-toastification";
+import TopNav from '../components/TopNav.vue';
+import DashboardNav from '../components/DashboardNav.vue';
+import FooterVue from '@/components/Footer.vue';
+import { ref } from 'vue';
+import ModalSche from '@/modal/modalSche.vue';
+import Loading from '@/common/loading.vue';
+import { useToast } from 'vue-toastification';
 export default {
-  name: "MakeAppointmentView",
-  components: { TopNav, DashboardNav, ModalSche, ModalSche, Loading },
+  name: 'MakeAppointmentView',
+  components: {
+    TopNav,
+    DashboardNav,
+    ModalSche,
+    ModalSche,
+    Loading,
+    FooterVue,
+  },
   data() {
     return {
-      name: "",
-      number: "",
-      age: "",
-      dept: "",
-      doctor: "",
-      visitDate: "",
-      visitDay: "",
-      vistSession: "",
-      serial: "",
-      period: "",
-      max: "",
-      min: "",
-      toDay: "",
+      name: '',
+      number: '',
+      age: '',
+      dept: '',
+      doctor: '',
+      visitDate: '',
+      visitDay: '',
+      vistSession: '',
+      serial: '',
+      period: '',
+      max: '',
+      min: '',
+      toDay: '',
       update: 0,
-      startFrom: "",
-      deptname: "",
+      startFrom: '',
+      deptname: '',
       overview: false,
       load: false,
       doctorList: [],
       docSchedule: [],
       department: [],
       appointments: [],
-      wdays: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
+      wdays: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
       showDatepicker: false,
-      message: "",
-      advance:"",
+      message: '',
+      advance: '',
       availAbleList: [],
     };
   },
@@ -419,10 +431,10 @@ export default {
   methods: {
     checkAvailable() {
       var today = this.toDay.getDay();
-      
-      console.log(this.wdays[this.toDay])
-  
-      if(this.advance == 0){
+
+      console.log(this.wdays[this.toDay]);
+
+      if (this.advance == 0) {
         this.availAbleList.push(this.wdays[today]);
       } else {
         for (var i = 0; i < Number(this.advance); i++) {
@@ -435,16 +447,15 @@ export default {
           this.availAbleList.push(this.wdays[today]);
         }
       }
-      
     },
     clearField() {
-      this.name = "";
-      this.number = "";
-      this.age = "";
-      this.dept = "";
-      this.visitDay = "";
-      this.doctor = "";
-      this.visitDate = "";
+      this.name = '';
+      this.number = '';
+      this.age = '';
+      this.dept = '';
+      this.visitDay = '';
+      this.doctor = '';
+      this.visitDate = '';
       this.overview = false;
     },
 
@@ -458,23 +469,23 @@ export default {
     },
 
     postAppointment() {
-      if (this.name == "") {
-        this.message = "*Required Field";
-        this.toast.error("Please fill out all the fields", {
+      if (this.name == '') {
+        this.message = '*Required Field';
+        this.toast.error('Please fill out all the fields', {
           timeout: 4000,
         });
         return false;
       }
-      if (this.number == "") {
-        this.message = "*Required Field";
-        this.toast.error("Please fill out all the fields", {
+      if (this.number == '') {
+        this.message = '*Required Field';
+        this.toast.error('Please fill out all the fields', {
           timeout: 4000,
         });
         return false;
       }
-      if (this.age == "") {
-        this.message = "*Required Field";
-        this.toast.error("Please fill out all the fields", {
+      if (this.age == '') {
+        this.message = '*Required Field';
+        this.toast.error('Please fill out all the fields', {
           timeout: 4000,
         });
         return false;
@@ -482,21 +493,21 @@ export default {
 
       this.load = true;
       const data = new FormData();
-      data.append("name", this.name);
-      data.append("number", this.number);
-      data.append("age", this.age);
-      data.append("department", this.dept);
-      data.append("doctor", this.doctor);
-      data.append("visitDate", this.convertDate(this.visitDate));
-      data.append("visitDay", this.visitDay);
-      data.append("visitSession", this.visitSession);
-      data.append("serial", this.serial);
-      data.append("period", this.period);
+      data.append('name', this.name);
+      data.append('number', this.number);
+      data.append('age', this.age);
+      data.append('department', this.dept);
+      data.append('doctor', this.doctor);
+      data.append('visitDate', this.convertDate(this.visitDate));
+      data.append('visitDay', this.visitDay);
+      data.append('visitSession', this.visitSession);
+      data.append('serial', this.serial);
+      data.append('period', this.period);
 
       fetch(
-        "http://server.parkviewappointment.com/parkview/reception/postAppointment",
+        'http://server.parkviewappointment.com/parkview/reception/postAppointment',
         {
-          method: "POST",
+          method: 'POST',
           body: data,
         }
       )
@@ -511,9 +522,9 @@ export default {
 
     getDoctorlist() {
       fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getDoctor",
+        'http://server.parkviewappointment.com/parkview/reception/getDoctor',
         {
-          method: "POST",
+          method: 'POST',
         }
       )
         .then((res) => res.json())
@@ -526,9 +537,9 @@ export default {
 
     getAppointment() {
       fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getAppointmentLast",
+        'http://server.parkviewappointment.com/parkview/reception/getAppointmentLast',
         {
-          method: "POST",
+          method: 'POST',
         }
       )
         .then((res) => res.json())
@@ -541,9 +552,9 @@ export default {
     getDepartment() {
       const data = new FormData();
       fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getDepartment",
+        'http://server.parkviewappointment.com/parkview/reception/getDepartment',
         {
-          method: "POST",
+          method: 'POST',
           body: data,
         }
       )
@@ -560,31 +571,27 @@ export default {
       this.period = period;
     },
 
-  
-
     getSerialSuggetion() {
       var result = new Date();
       this.availAbleList.map((item, index) => {
         if (item.toLowerCase().includes(this.visitDay.toLocaleLowerCase())) {
-          result.setDate(result.getDate() + index+1);
+          result.setDate(result.getDate() + index + 1);
           this.visitDate = this.formatDate(result);
         }
       });
 
-      
-
-      if (this.convertDate(this.visitDate) === "NaN-NaN-NaN") {
+      if (this.convertDate(this.visitDate) === 'NaN-NaN-NaN') {
       } else {
         this.showDatepicker = false;
         this.load = true;
         const data = new FormData();
-        data.append("doctor", this.doctor);
-        data.append("day", this.visitDay);
-        data.append("session", this.visitSession);
+        data.append('doctor', this.doctor);
+        data.append('day', this.visitDay);
+        data.append('session', this.visitSession);
         fetch(
-          "http://server.parkviewappointment.com/parkview/reception/getSerialSuggetion",
+          'http://server.parkviewappointment.com/parkview/reception/getSerialSuggetion',
           {
-            method: "POST",
+            method: 'POST',
             body: data,
           }
         )
@@ -592,7 +599,7 @@ export default {
           .then((res) => {
             var A = [];
             for (var i = 1; i <= this.max; i++) {
-              if (res.reserved.includes("," + i + "")) {
+              if (res.reserved.includes(',' + i + '')) {
               } else {
                 A.push(i);
               }
@@ -600,7 +607,7 @@ export default {
             const B = res.serial;
 
             console.log(res.serial);
-            console.log(res.reserved)
+            console.log(res.reserved);
             this.serial = A.filter((n) => !B.includes(n))[0];
             // console.log(A.filter((n) => !B.includes(n)));
 
@@ -609,7 +616,7 @@ export default {
 
             this.period =
               this.addMinutes(Number(this.min) * (Number(this.serial) - 1)) +
-              "-" +
+              '-' +
               this.addMinutes(Number(this.min) * Number(this.serial));
             this.overview = true;
           })
@@ -641,7 +648,7 @@ export default {
     },
 
     addMinutes(minutes) {
-      var date = this.convertDate(this.visitDate) + ":" + this.startFrom;
+      var date = this.convertDate(this.visitDate) + ':' + this.startFrom;
       var newDate = new Date(date);
       newDate = new Date(newDate.getTime() + minutes * 60000);
       return this.DateFormat(newDate);
@@ -655,11 +662,11 @@ export default {
       hours = hours % 12 || 12;
 
       if (hours < 10) {
-        hours = "0" + hours;
+        hours = '0' + hours;
       }
       var minutes = date.getMinutes();
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      var strTime = hours + ":" + minutes;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      var strTime = hours + ':' + minutes;
       return strTime;
     },
 
@@ -667,35 +674,33 @@ export default {
       var date = new Date(date);
       var hours = date.getHours();
       var minutes = date.getMinutes();
-      var ampm = hours >= 12 ? "pm" : "am";
+      var ampm = hours >= 12 ? 'pm' : 'am';
       hours = hours % 12;
       hours = hours ? hours : 12; // the hour "0" should be "12"
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      var strTime = hours + ":" + minutes + " " + ampm;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      var strTime = hours + ':' + minutes + ' ' + ampm;
 
-      var month = (date.getMonth()+1)
-      if(month<10){
-        month = '0'+month;
+      var month = date.getMonth() + 1;
+      if (month < 10) {
+        month = '0' + month;
       }
 
       var tdate = date.getDate();
 
-      if(tdate<10){
-        tdate = '0'+tdate;
+      if (tdate < 10) {
+        tdate = '0' + tdate;
       }
 
-      return (
-        date.getFullYear()  + "-" + month + "-" + tdate
-      );
+      return date.getFullYear() + '-' + month + '-' + tdate;
     },
 
     convertDate(inputFormat) {
       function pad(s) {
-        return s < 10 ? "0" + s : s;
+        return s < 10 ? '0' + s : s;
       }
       var d = new Date(inputFormat);
       return [d.getFullYear(), pad(d.getMonth() + 1), pad(d.getDate())].join(
-        "-"
+        '-'
       );
     },
   },

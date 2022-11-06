@@ -235,7 +235,10 @@
                     <p class="m-0 fw-bold">Available Today</p>
                   </div>
                   <div class="col-lg-6 text-center">
-                    <select class="form-select form-select-sm rounded-0 border-dark" v-model="docDeptSelect">
+                    <select
+                      class="form-select form-select-sm rounded-0 border-dark"
+                      v-model="docDeptSelect"
+                    >
                       <option value="">Choose Dept.</option>
                       <option v-for="dept in department">
                         {{ dept.department }}
@@ -258,13 +261,17 @@
                         <div class="col-lg-8">
                           <p class="m-0 fw-bold">{{ doctor.doctor }}</p>
                           <p class="m-0 designation-font">
-                            <b>{{ doctor.department }}</b><br />
+                            <b>{{ doctor.department }}</b
+                            ><br />
                             {{ doctor.qualification }}
                           </p>
                         </div>
                         <div class="col-lg-4">
-                          <div class="roomNo rounded-pill text-white text-center">
-                            <i class="fa-solid fa-door-open py-2"></i> {{ doctor.room }}
+                          <div
+                            class="roomNo rounded-pill text-white text-center"
+                          >
+                            <i class="fa-solid fa-door-open py-2"></i>
+                            {{ doctor.room }}
                           </div>
                         </div>
                       </div>
@@ -278,14 +285,17 @@
       </div>
     </div>
   </div>
+
+  <FooterVue />
 </template>
 <script>
 import TopNav from '../components/TopNav.vue';
 import DashboardNav from '../components/DashboardNav.vue';
+import FooterVue from '@/components/Footer.vue';
 import { useToast } from 'vue-toastification';
 export default {
   name: 'DocAppointmentListView',
-  components: { TopNav, DashboardNav },
+  components: { TopNav, DashboardNav, FooterVue },
   data() {
     return {
       dept: '',
