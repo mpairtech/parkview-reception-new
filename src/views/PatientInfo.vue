@@ -68,7 +68,7 @@
                               .includes(this.fdate.toString())
                           "
                         >
-                          <td class="border-0">{{ appointment.patientId }}</td>
+                          <td class="border-0">{{ appointment.patientId == 0 ? appointment.id : appointment.patientId }}</td>
                           <td class="border-0">{{ appointment.name }}</td>
                           <td class="border-0">{{ appointment.doctor }}</td>
                           <td class="border-0">{{ appointment.department }}</td>
@@ -218,9 +218,19 @@ export default {
       hours = hours ? hours : 12; // the hour "0" should be "12"
       minutes = minutes < 10 ? '0' + minutes : minutes;
       var strTime = hours + ':' + minutes + ' ' + ampm;
-      return (
-        date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
-      );
+
+      var month = date.getMonth() + 1;
+      if (month < 10) {
+        month = '0' + month;
+      }
+
+      var tdate = date.getDate();
+
+      if (tdate < 10) {
+        tdate = '0' + tdate;
+      }
+
+      return date.getFullYear() + '-' + month + '-' + tdate;
     },
     getAppointment() {
       fetch(

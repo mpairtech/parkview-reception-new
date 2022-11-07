@@ -393,8 +393,20 @@ export default {
       hours = hours ? hours : 12; // the hour "0" should be "12"
       minutes = minutes < 10 ? '0' + minutes : minutes;
       var strTime = hours + ':' + minutes + ' ' + ampm;
+
+      var month = Number(date.getMonth())+1;
+      var today = Number(date.getDate());
+
+      if(month < 10){
+        month = '0'+month;
+      }
+
+      if(today < 10){
+        today = '0'+today;
+      }
+
       return (
-        date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+        date.getFullYear() + '-' + month + '-' + today
       );
     },
     getDeptname() {

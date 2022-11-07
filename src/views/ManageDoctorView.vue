@@ -99,11 +99,11 @@
                     class="changeSchButton px-1 mb-1"
                   >
                     <button
-                      @click="changeReserved(index)"
+                       @click="changeReserved(index)"
                       :class="[
                         this.reserveList.indexOf(index) > -1
-                          ? 'btn changeSchButtonClick rounded-0 w-100'
-                          : 'btn changeSchButtonClick rounded-0 w-100 activebtn',
+                          ? 'btn changeSchButtonClick rounded-0 w-100 activebtn'
+                          : 'btn changeSchButtonClick rounded-0 w-100',
                       ]"
                       style="font-size: 0.8rem"
                     >
@@ -447,6 +447,18 @@ export default {
           this.min = item.min;
         }
       });
+
+
+      this.docSchedule.map(item=>{
+        if(item.doctorId == this.chooseDoc){
+          
+            var mreserved = item.reserved.split(',');
+            mreserved.map(reserve=>{
+              this.reserveList.push(Number(reserve));
+            })
+
+        }
+      })   
     },
     formatDate(date) {
       var date = new Date(date);
@@ -457,9 +469,19 @@ export default {
       hours = hours ? hours : 12; // the hour "0" should be "12"
       minutes = minutes < 10 ? '0' + minutes : minutes;
       var strTime = hours + ':' + minutes + ' ' + ampm;
-      return (
-        date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
-      );
+
+      var month = date.getMonth() + 1;
+      if (month < 10) {
+        month = '0' + month;
+      }
+
+      var tdate = date.getDate();
+
+      if (tdate < 10) {
+        tdate = '0' + tdate;
+      }
+
+      return date.getFullYear() + '-' + month + '-' + tdate;
     },
     getDoctorlist() {
       fetch(
@@ -473,6 +495,10 @@ export default {
           console.log(res);
           this.doctorList = res.doctors;
           this.docSchedule = res.schedules;
+          
+          
+
+          
         })
         .catch((err) => console.log(err));
     },

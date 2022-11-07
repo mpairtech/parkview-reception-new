@@ -131,6 +131,7 @@
                                 </label>
                                 <select
                                   v-model="visitDay"
+                                  @change="getSerialSuggetion"
                                   class="form-select form-select-sm rounded-0 label-font"
                                 >
                                   <option value="">Day</option>
@@ -432,8 +433,6 @@ export default {
     checkAvailable() {
       var today = this.toDay.getDay();
 
-      console.log(this.wdays[this.toDay]);
-
       if (this.advance == 0) {
         this.availAbleList.push(this.wdays[today]);
       } else {
@@ -575,7 +574,13 @@ export default {
       var result = new Date();
       this.availAbleList.map((item, index) => {
         if (item.toLowerCase().includes(this.visitDay.toLocaleLowerCase())) {
-          result.setDate(result.getDate() + index + 1);
+
+          if(this.availAbleList.length == 1){
+            result.setDate(result.getDate() + index );
+          } else {
+            result.setDate(result.getDate() + index + 1);
+          }
+          
           this.visitDate = this.formatDate(result);
         }
       });
