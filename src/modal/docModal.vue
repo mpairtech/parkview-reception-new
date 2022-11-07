@@ -19,11 +19,12 @@
                 <div v-for="doc in docList" class="row">
                   <div class="col-lg-12 text-center">
                     <img
+                      v-if="doc.docimage"
                       :src="[
                         'http://parkviewappointment.com/image/' + doc.docimage,
                       ]"
                       alt=""
-                      style="height: 5rem"
+                      style="height: 5rem; width: 5rem; object-fit: contain"
                       class="border border-dark rounded-circle mt-4 mb-2"
                     />
                     <p class="fw-bold mb-1">{{ doc.doctor }}</p>
@@ -162,19 +163,11 @@
                               <div class="row mb-3">
                                 <div class="col-lg-4">
                                   <label class="form-check-label fw-bold"
-                                    >Unavailable Period {{ doc.period }}</label
-                                  >
+                                    >Unavailable Period
+                                  </label>
                                 </div>
                               </div>
-                              <div class="row mb-2">
-                                <div class="col-lg-12">
-                                  <div class="form-check">
-                                    <label class="form-check-label"
-                                      >Single Day</label
-                                    >
-                                  </div>
-                                </div>
-                              </div>
+                              <div class="row mb-2"></div>
                               <div class="row">
                                 <div
                                   class="col-lg-6"

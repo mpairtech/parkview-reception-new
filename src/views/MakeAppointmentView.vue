@@ -158,7 +158,7 @@
                                 >
                                 <select
                                   v-model="visitSession"
-                                  @click="getSerialSuggetion"
+                                  @change="getSerialSuggetion"
                                   class="form-select form-select-sm rounded-0 label-font"
                                 >
                                   <option value="">Session</option>
@@ -572,18 +572,20 @@ export default {
 
     getSerialSuggetion() {
       var result = new Date();
-      this.availAbleList.map((item, index) => {
-        if (item.toLowerCase().includes(this.visitDay.toLocaleLowerCase())) {
 
-          if(this.availAbleList.length == 1){
-            result.setDate(result.getDate() + index );
-          } else {
-            result.setDate(result.getDate() + index + 1);
+      if (this.visitDay != '') {
+        this.availAbleList.map((item, index) => {
+          if (item.toLowerCase().includes(this.visitDay.toLocaleLowerCase())) {
+            if (this.availAbleList.length == 1) {
+              result.setDate(result.getDate() + index);
+            } else {
+              result.setDate(result.getDate() + index + 1);
+            }
+
+            this.visitDate = this.formatDate(result);
           }
-          
-          this.visitDate = this.formatDate(result);
-        }
-      });
+        });
+      }
 
       if (this.convertDate(this.visitDate) === 'NaN-NaN-NaN') {
       } else {
@@ -645,7 +647,12 @@ export default {
           this.min = item.min;
           this.advance = item.advanced;
 
-          console.log(item.advanced);
+          this.availAbleList = [];
+          this.visitDate = '';
+          this.visitDay = '';
+          this.visitSession = '';
+          this.serial = '';
+          this.period = '';
         }
       });
 

@@ -91,16 +91,25 @@
                   <div class="col-lg-5">
                     <div class="row">
                       <div class="col-lg-3 pt-3 mx-auto">
-                        <label for="docPic" class="form-label"
-                          ><img
-                            v-if="image != ''"
+                        <label for="docPic" class="form-label">
+                          <img
+                            v-if="preview == false && image != ''"
                             :src="[
                               'http://parkviewappointment.com/image/' + image,
                             ]"
                             class="doctorDP"
                             alt="..."
                           />
-                          <p v-if="image == ''">Choose Photo</p>
+
+                          <img
+                            v-if="preview"
+                            :src="[url]"
+                            class="doctorDP"
+                            alt="..."
+                          />
+                          <p v-if="image == ''" style="cursor: pointer">
+                            Choose Photo
+                          </p>
                         </label>
                         <input
                           class="form-control form-control-sm rounded-0 border-dark"
@@ -353,6 +362,8 @@ export default {
       message: '',
       advanced: '',
       days: ['SAT', 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI'],
+      preview: false,
+      url: '',
     };
   },
   watch: {
@@ -373,7 +384,11 @@ export default {
   },
   methods: {
     doctorPic() {
+      this.preview = true;
+
       this.image = this.$refs.file1.files[0];
+
+      this.url = URL.createObjectURL(this.image);
     },
     getDocIndividual() {
       this.id = this.$route.params.id;
@@ -390,6 +405,9 @@ export default {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
+          if (data.message[0].docimage == '') {
+            // this.preview = true;
+          }
           this.docName = data.message[0].doctor;
           this.image = data.message[0].docimage;
           this.depts = data.message[0].department;

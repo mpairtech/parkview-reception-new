@@ -4,8 +4,14 @@
       <div class="row">
         <div class="col-lg-3 pt-3 mx-auto">
           <label for="docPic" class="form-label"
-            ><img src="../assets/Images/user.png" class="doctorDP" alt=""
-          /></label>
+            ><img
+              v-if="preview == false"
+              src="../assets/Images/user.png"
+              class="doctorDP"
+              alt=""
+            />
+            <img v-if="preview" :src="[url]" class="doctorDP" alt="..." />
+          </label>
           <input
             class="form-control form-control-sm rounded-0 border-dark"
             type="file"
@@ -94,23 +100,19 @@
         }}</small>
       </div>
 
-                    <div class="mb-2">
-                      <label for="" class="form-label"
-                        >Advanced Reservation</label
-                      >
-                      
+      <div class="mb-2">
+        <label for="" class="form-label">Advanced Reservation</label>
 
-                      <select 
-                      class="form-control form-control-sm rounded-0 border-dark"
-                      v-model="advanced">
-                        <option value="0">Same Day</option>
-                        <option value="2">Three Days Ago</option>
-                        <option value="4">Five Days Ago</option>
-                        <option value="6">Seven Days Ago</option>
-                      </select>
-                      
-                    </div>
-
+        <select
+          class="form-control form-control-sm rounded-0 border-dark"
+          v-model="advanced"
+        >
+          <option value="0">Same Day</option>
+          <option value="2">Three Days Ago</option>
+          <option value="4">Five Days Ago</option>
+          <option value="6">Seven Days Ago</option>
+        </select>
+      </div>
     </div>
     <div class="col-lg-2">
       <button
@@ -133,7 +135,7 @@ export default {
   data() {
     return {
       department: [],
-      advanced:'',
+      advanced: '',
       dept: '',
       docName: '',
       qualification: '',
@@ -144,6 +146,8 @@ export default {
       image: '',
       load: false,
       message: '',
+      preview: false,
+      url: '',
     };
   },
   mounted() {
@@ -155,7 +159,11 @@ export default {
   },
   methods: {
     doctorPic() {
+      this.preview = true;
+
       this.image = this.$refs.file1.files[0];
+
+      this.url = URL.createObjectURL(this.image);
     },
     getDepartment() {
       const data = new FormData();
@@ -230,7 +238,7 @@ export default {
       data.append('fee', this.consFee);
       data.append('max', this.maxCons);
       data.append('min', this.minConsPeriod);
-      data.append("advanced",this.advanced);
+      data.append('advanced', this.advanced);
       data.append('token', localStorage.getItem('token'));
       fetch(
         'http://server.parkviewappointment.com/parkview/reception/postDoctor',
