@@ -99,7 +99,7 @@
                     class="changeSchButton px-1 mb-1"
                   >
                     <button
-                       @click="changeReserved(index)"
+                      @click="changeReserved(index)"
                       :class="[
                         this.reserveList.indexOf(index) > -1
                           ? 'btn changeSchButtonClick rounded-0 w-100 activebtn'
@@ -448,17 +448,14 @@ export default {
         }
       });
 
-
-      this.docSchedule.map(item=>{
-        if(item.doctorId == this.chooseDoc){
-          
-            var mreserved = item.reserved.split(',');
-            mreserved.map(reserve=>{
-              this.reserveList.push(Number(reserve));
-            })
-
+      this.docSchedule.map((item) => {
+        if (item.doctorId == this.chooseDoc) {
+          var mreserved = item.reserved.split(',');
+          mreserved.map((reserve) => {
+            this.reserveList.push(Number(reserve));
+          });
         }
-      })   
+      });
     },
     formatDate(date) {
       var date = new Date(date);
@@ -495,10 +492,6 @@ export default {
           console.log(res);
           this.doctorList = res.doctors;
           this.docSchedule = res.schedules;
-          
-          
-
-          
         })
         .catch((err) => console.log(err));
     },
@@ -548,7 +541,9 @@ export default {
       )
         .then((res) => res.json())
         .then((res) => {
-          console.log(res.message);
+          this.toast.success('Reservation Updated', {
+            timeout: 4000,
+          });
         })
         .catch((err) => console.log(err.message));
     },

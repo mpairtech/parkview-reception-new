@@ -433,19 +433,30 @@ export default {
     checkAvailable() {
       var today = this.toDay.getDay();
 
+      console.log(today);
+
       if (this.advance == 0) {
         this.availAbleList.push(this.wdays[today]);
       } else {
-        for (var i = 0; i < Number(this.advance); i++) {
-          today = today + 1;
+        for (var i = 0; i < Number(this.advance) + 1; i++) {
+          if (i == 0) {
+            today = today;
+          } else {
+            today = today + 1;
+          }
 
           if (today > 6) {
             today = 0;
           }
 
+          console.log(today);
+
           this.availAbleList.push(this.wdays[today]);
         }
       }
+
+      console.log(this.advance);
+      console.log(this.availAbleList);
     },
     clearField() {
       this.name = '';
@@ -576,11 +587,7 @@ export default {
       if (this.visitDay != '') {
         this.availAbleList.map((item, index) => {
           if (item.toLowerCase().includes(this.visitDay.toLocaleLowerCase())) {
-            if (this.availAbleList.length == 1) {
-              result.setDate(result.getDate() + index);
-            } else {
-              result.setDate(result.getDate() + index + 1);
-            }
+            result.setDate(result.getDate() + index);
 
             this.visitDate = this.formatDate(result);
           }
