@@ -81,6 +81,23 @@
                     </p></a
                   >
                 </li>
+                <li
+                  @click="changeStat('available')"
+                  :class="
+                    activeTab == 'available'
+                      ? 'nav-item mx-5 navactive'
+                      : 'nav-item mx-5'
+                  "
+                >
+                  <a
+                    class="nav-link"
+                    @click="this.activeTab = 'available'"
+                    style="cursor: pointer"
+                    ><p class="m-0 fs-6 text-dark">
+                      <strong>Availability</strong>
+                    </p></a
+                  >
+                </li>
               </ul>
             </div>
           </div>
@@ -319,6 +336,91 @@
                   </div>
                 </div>
               </div>
+
+              <div class="" v-if="activeTab == 'available'">
+                <div class="container">
+                  <div class="row justify-content-center">
+                    <div class="col-lg-8 pb-2 py-5">
+                      <div class="card bg-light border-0 p-2">
+                        <div class="card-body">
+                          <p class="fw-bold font-14 mb-0">
+                            Unavailable Period {{ period }}
+                          </p>
+                          <div class="form-check my-2">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="flexRadioDefault"
+                              id="flexRadioDefault1"
+                              value="single"
+                              v-model="period"
+                            />
+                            <label
+                              class="form-check-label"
+                              for="flexRadioDefault1"
+                            >
+                              Single Day
+                            </label>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-5">
+                              <input
+                                type="date"
+                                class="form-control form-control-sm border-dark shadow-none w-100"
+                                id=""
+                                placeholder=""
+                                v-if="period == 'single'"
+                                v-model="startDate"
+                              />
+                            </div>
+                            <div class="col-lg-2"></div>
+                          </div>
+                          <div class="form-check my-2">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="flexRadioDefault"
+                              id=""
+                              value="more"
+                              v-model="period"
+                            />
+                            <label
+                              class="form-check-label"
+                              for="flexRadioDefault1"
+                            >
+                              More Day
+                            </label>
+                          </div>
+                          <div class="row my-2">
+                            <div class="col-lg-8 d-flex my-auto">
+                              <input
+                                type="date"
+                                class="form-control form-control-sm border-dark shadow-none w-100"
+                                v-if="period == 'more'"
+                                v-model="startDate"
+                              />
+                              <i class="fa-solid fa-minus mx-2 my-auto"></i>
+                              <input
+                                type="date"
+                                class="form-control form-control-sm border-dark shadow-none w-100"
+                                v-if="period == 'more'"
+                                v-model="endDate"
+                              />
+                            </div>
+                          </div>
+
+                          <button
+                            @click="upAvailable"
+                            class="btn downButton btnMargin text-white w-100 rounded-0 py-3 mb-2"
+                          >
+                            Update
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -328,42 +430,45 @@
   <FooterVue />
 </template>
 <script>
-import TopNav from '../components/TopNav.vue';
-import FooterVue from '@/components/Footer.vue';
-import DashboardNav from '../components/DashboardNav.vue';
+import TopNav from "../components/TopNav.vue";
+import FooterVue from "@/components/Footer.vue";
+import DashboardNav from "../components/DashboardNav.vue";
 
-import { useToast } from 'vue-toastification';
+import { useToast } from "vue-toastification";
 export default {
   data() {
     return {
-      docDeptSelect: '',
-      depts: '',
-      docs: '',
-      delid: '',
-      docName: '',
-      roomNo: '',
-      consFee: '',
-      maxCons: '',
-      minCons: '',
-      activeTab: 'doctor',
+      docDeptSelect: "",
+      depts: "",
+      docs: "",
+      delid: "",
+      docName: "",
+      roomNo: "",
+      consFee: "",
+      maxCons: "",
+      minCons: "",
+      activeTab: "doctor",
       prevSchedule: [],
-      daySelect: '',
-      sessionSelect: '',
-      startTime: '',
-      endTime: '',
+      daySelect: "",
+      sessionSelect: "",
+      startTime: "",
+      endTime: "",
       indexCheck: -1,
       update: 0,
       selectId: 0,
       scheDuleId: 0,
       reserved: [],
       load: false,
-      image: '',
-      max: '',
-      message: '',
-      advanced: '',
-      days: ['SAT', 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI'],
+      image: "",
+      max: "",
+      message: "",
+      advanced: "",
+      days: ["SAT", "SUN", "MON", "TUE", "WED", "THU", "FRI"],
       preview: false,
-      url: '',
+      url: "",
+      period: "",
+      startDate: "",
+      endDate: "",
     };
   },
   watch: {
@@ -380,6 +485,7 @@ export default {
     return { toast };
   },
   mounted() {
+    this.getDocIndividual();
     this.getSchedule();
   },
   methods: {
@@ -393,21 +499,22 @@ export default {
     getDocIndividual() {
       this.id = this.$route.params.id;
       const data = new FormData();
-      data.append('id', this.id);
+      data.append("id", this.id);
 
       fetch(
         `http://server.parkviewappointment.com/parkview/reception/getDoctorById`,
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-          if (data.message[0].docimage == '') {
+          if (data.message[0].docimage == "") {
             // this.preview = true;
           }
+
           this.docName = data.message[0].doctor;
           this.image = data.message[0].docimage;
           this.depts = data.message[0].department;
@@ -419,16 +526,22 @@ export default {
           this.minCons = data.message[0].min;
           this.advanced = data.message[0].advanced;
           this.reserved = data.schedule[0].reserved;
+
+          this.period = data.message[0].period;
+          this.startDate = data.message[0].startDate;
+          this.endDate = data.message[0].endDate;
+
+          console.log(data.message[0].period);
         })
         .catch((err) => console.log(err.message));
     },
     delSche(id) {
       const data = new FormData();
-      data.append('id', id);
+      data.append("id", id);
       fetch(
-        'http://server.parkviewappointment.com/parkview/admin/deleteSchedule',
+        "http://server.parkviewappointment.com/parkview/admin/deleteSchedule",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
@@ -440,16 +553,16 @@ export default {
     },
     selectReserve() {
       if (this.reserved.includes(this.selectId)) {
-        console.log('Already reserved');
+        console.log("Already reserved");
       } else {
         this.reserved.push(this.selectId);
       }
     },
     clearField() {
-      this.daySelect = '';
-      this.sessionSelect = '';
-      this.startTime = '';
-      this.endTime = '';
+      this.daySelect = "";
+      this.sessionSelect = "";
+      this.startTime = "";
+      this.endTime = "";
     },
     tConvert(time) {
       time = time
@@ -459,39 +572,39 @@ export default {
       if (time.length > 1) {
         // If time format correct
         time = time.slice(1); // Remove full string match value
-        time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+        time[5] = +time[0] < 12 ? " AM" : " PM"; // Set AM/PM
         time[0] = +time[0] % 12 || 12; // Adjust hours
       }
-      return time.join(''); // return adjusted time or original string
+      return time.join(""); // return adjusted time or original string
     },
 
     makeSave(e) {
       e.preventDefault();
 
-      if (this.daySelect == '') {
-        this.message = '*Required Field';
-        this.toast.error('Please select Schedule Day', {
+      if (this.daySelect == "") {
+        this.message = "*Required Field";
+        this.toast.error("Please select Schedule Day", {
           timeout: 4000,
         });
         return false;
       }
-      if (this.sessionSelect == '') {
-        this.message = '*Required Field';
-        this.toast.error('Please select Schedule Session', {
+      if (this.sessionSelect == "") {
+        this.message = "*Required Field";
+        this.toast.error("Please select Schedule Session", {
           timeout: 4000,
         });
         return false;
       }
-      if (this.startTime == '') {
-        this.message = '*Required Field';
-        this.toast.error('Please select Start Time', {
+      if (this.startTime == "") {
+        this.message = "*Required Field";
+        this.toast.error("Please select Start Time", {
           timeout: 4000,
         });
         return false;
       }
-      if (this.endTime == '') {
-        this.message = '*Required Field';
-        this.toast.error('Please select End Time', {
+      if (this.endTime == "") {
+        this.message = "*Required Field";
+        this.toast.error("Please select End Time", {
           timeout: 4000,
         });
         return false;
@@ -499,16 +612,16 @@ export default {
 
       this.load = true;
       const data = new FormData();
-      data.append('day', this.daySelect);
-      data.append('session', this.sessionSelect);
-      data.append('startFrom', this.tConvert(this.startTime));
-      data.append('endTo', this.tConvert(this.endTime));
-      data.append('doctorId', this.docId);
-      data.append('reserved', this.reserved);
+      data.append("day", this.daySelect);
+      data.append("session", this.sessionSelect);
+      data.append("startFrom", this.tConvert(this.startTime));
+      data.append("endTo", this.tConvert(this.endTime));
+      data.append("doctorId", this.docId);
+      data.append("reserved", this.reserved);
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/docSchedulePost',
+        "http://server.parkviewappointment.com/parkview/reception/docSchedulePost",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
@@ -525,11 +638,11 @@ export default {
     getSchedule() {
       this.docId = this.$route.params.id;
       const data = new FormData();
-      data.append('doctorId', this.docId);
+      data.append("doctorId", this.docId);
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/getSchedule',
+        "http://server.parkviewappointment.com/parkview/reception/getSchedule",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
@@ -551,66 +664,66 @@ export default {
       this.scheInfo = true;
     },
     updateDoctor() {
-      if (this.docName == '') {
-        this.message = '*Required Field';
-        this.toast.error('Please fill out all the fields', {
+      if (this.docName == "") {
+        this.message = "*Required Field";
+        this.toast.error("Please fill out all the fields", {
           timeout: 4000,
         });
         return false;
       }
 
-      if (this.qualification == '') {
-        this.message = '*Required Field';
-        this.toast.error('Please fill out all the fields', {
+      if (this.qualification == "") {
+        this.message = "*Required Field";
+        this.toast.error("Please fill out all the fields", {
           timeout: 4000,
         });
         return false;
       }
-      if (this.roomNo == '') {
-        this.message = '*Required Field';
-        this.toast.error('Please fill out all the fields', {
+      if (this.roomNo == "") {
+        this.message = "*Required Field";
+        this.toast.error("Please fill out all the fields", {
           timeout: 4000,
         });
         return false;
       }
-      if (this.consFee == '') {
-        this.message = '*Required Field';
-        this.toast.error('Please fill out all the fields', {
+      if (this.consFee == "") {
+        this.message = "*Required Field";
+        this.toast.error("Please fill out all the fields", {
           timeout: 4000,
         });
         return false;
       }
-      if (this.maxCons == '') {
-        this.message = '*Required Field';
-        this.toast.error('Please fill out all the fields', {
+      if (this.maxCons == "") {
+        this.message = "*Required Field";
+        this.toast.error("Please fill out all the fields", {
           timeout: 4000,
         });
         return false;
       }
-      if (this.minConsPeriod == '') {
-        this.message = '*Required Field';
-        this.toast.error('Please fill out all the fields', {
+      if (this.minConsPeriod == "") {
+        this.message = "*Required Field";
+        this.toast.error("Please fill out all the fields", {
           timeout: 4000,
         });
         return false;
       }
 
       const data = new FormData();
-      data.append('id', this.id);
-      data.append('department', this.depts);
-      data.append('docimage', this.image);
-      data.append('doctor', this.docName);
-      data.append('qualification', this.qualification);
-      data.append('room', this.roomNo);
-      data.append('fee', this.consFee);
-      data.append('max', this.maxCons);
-      data.append('min', this.minCons);
-      data.append('advanced', this.advanced);
+      data.append("id", this.id);
+      data.append("department", this.depts);
+      data.append("docimage", this.image);
+      data.append("doctor", this.docName);
+      data.append("qualification", this.qualification);
+      data.append("room", this.roomNo);
+      data.append("fee", this.consFee);
+      data.append("max", this.maxCons);
+      data.append("min", this.minCons);
+      data.append("advanced", this.advanced);
 
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/updateDoctor',
+        "http://server.parkviewappointment.com/parkview/reception/updateDoctor",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
@@ -618,7 +731,34 @@ export default {
         .then((res) => {
           this.update = 1;
 
-          this.toast.success('Doctor Info has been updated', {
+          this.toast.success("Doctor Info has been updated", {
+            timeout: 4000,
+          });
+        })
+        .catch((err) => console.log(err));
+    },
+
+    upAvailable() {
+      const data = new FormData();
+
+      this.id = this.$route.params.id;
+
+      data.append("period", this.period);
+      data.append("startDate", this.startDate);
+      data.append("endDate", this.endDate);
+      data.append("id", this.id);
+
+      fetch(
+        "https://server.parkviewappointment.com/parkview/reception/upAvailable",
+        {
+          method: "POST",
+          body: data,
+        }
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          this.toast.success("Availability Info Updated", {
             timeout: 4000,
           });
         })
@@ -629,7 +769,7 @@ export default {
     this.getDocIndividual();
   },
 
-  name: 'EditDoctorView',
+  name: "EditDoctorView",
   components: {
     TopNav,
     DashboardNav,
