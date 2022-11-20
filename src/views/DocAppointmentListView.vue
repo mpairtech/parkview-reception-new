@@ -110,10 +110,19 @@
                   <div class="col-lg-3">
                     <input
                       type="date"
-                      v-model="visitDate"
+                      v-model="visitDatestart"
                       class="form-control rounded-0 filterColor px-3"
                     />
                   </div>
+
+                  <div class="col-lg-3">
+                    <input
+                      type="date"
+                      v-model="visitDateend"
+                      class="form-control rounded-0 filterColor px-3"
+                    />
+                  </div>
+
                   <div class="col-lg-3">
                     <select
                       v-model="session"
@@ -248,7 +257,7 @@
                 </div>
 
                 <template v-for="sche in docSchedule">
-                  <template v-for="doctor in doctorList">
+                  <template v-for="doctor in availableDoc">
                     <template
                       v-if="
                         sche.doctorId == doctor.id && sche.day == this.thisDay
@@ -289,33 +298,37 @@
   <FooterVue />
 </template>
 <script>
-import TopNav from '../components/TopNav.vue';
-import DashboardNav from '../components/DashboardNav.vue';
-import FooterVue from '@/components/Footer.vue';
-import { useToast } from 'vue-toastification';
+import TopNav from "../components/TopNav.vue";
+import DashboardNav from "../components/DashboardNav.vue";
+import FooterVue from "@/components/Footer.vue";
+import { useToast } from "vue-toastification";
 export default {
-  name: 'DocAppointmentListView',
+  name: "DocAppointmentListView",
   components: { TopNav, DashboardNav, FooterVue },
   data() {
     return {
-      dept: '',
+      dept: "",
       doctorList: [],
       docSchedule: [],
       appointments: [],
       appointmentsList: [],
       department: [],
-      wdays: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
-      docId: '',
-      deptname: '',
-      session: '',
-      visitDate: '',
-      delid: '',
-      toDay: '',
-      thisDay: '',
+      wdays: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
+      docId: "",
+      deptname: "",
+      session: "",
+      visitDate: "",
+      delid: "",
+      toDay: "",
+      thisDay: "",
       update: 0,
-      docDeptSelect: '',
-      excelName: 'PatientInfo.xls',
-      uri: 'data:application/vnd.ms-excel;base64,',
+      docDeptSelect: "",
+
+      visitDatestart: "",
+      visitDateend: "",
+
+      excelName: "PatientInfo.xls",
+      uri: "data:application/vnd.ms-excel;base64,",
       template:
         '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
       base64: function (s) {
@@ -357,28 +370,28 @@ export default {
   methods: {
     tableToExcel(table, name) {
       if (!table.nodeType) table = this.$refs.table;
-      var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML };
-      var link = document.createElement('a');
-      link.download = !this.excelName.split('.').pop().length
-        ? this.excelName + '.xls'
+      var ctx = { worksheet: name || "Worksheet", table: table.innerHTML };
+      var link = document.createElement("a");
+      link.download = !this.excelName.split(".").pop().length
+        ? this.excelName + ".xls"
         : this.excelName;
       link.href = this.uri + this.base64(this.format(this.template, ctx));
       link.click();
     },
     delAppo(id) {
       const data = new FormData();
-      data.append('id', id);
+      data.append("id", id);
       fetch(
-        'http://server.parkviewappointment.com/parkview/admin/deleteAppointment',
+        "http://server.parkviewappointment.com/parkview/admin/deleteAppointment",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
         .then((res) => res.json())
         .then((res) => {
           this.update = 1;
-          this.toast.success('Appointment Cancelled', {
+          this.toast.success("Appointment Cancelled", {
             timeout: 4000,
           });
         })
@@ -388,26 +401,24 @@ export default {
       var date = new Date(date);
       var hours = date.getHours();
       var minutes = date.getMinutes();
-      var ampm = hours >= 12 ? 'pm' : 'am';
+      var ampm = hours >= 12 ? "pm" : "am";
       hours = hours % 12;
       hours = hours ? hours : 12; // the hour "0" should be "12"
-      minutes = minutes < 10 ? '0' + minutes : minutes;
-      var strTime = hours + ':' + minutes + ' ' + ampm;
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      var strTime = hours + ":" + minutes + " " + ampm;
 
-      var month = Number(date.getMonth())+1;
+      var month = Number(date.getMonth()) + 1;
       var today = Number(date.getDate());
 
-      if(month < 10){
-        month = '0'+month;
+      if (month < 10) {
+        month = "0" + month;
       }
 
-      if(today < 10){
-        today = '0'+today;
+      if (today < 10) {
+        today = "0" + today;
       }
 
-      return (
-        date.getFullYear() + '-' + month + '-' + today
-      );
+      return date.getFullYear() + "-" + month + "-" + today;
     },
     getDeptname() {
       this.department.map((item) => {
@@ -418,9 +429,9 @@ export default {
     },
     getDoctorlist() {
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/getDoctor',
+        "http://server.parkviewappointment.com/parkview/reception/getDoctor",
         {
-          method: 'POST',
+          method: "POST",
         }
       )
         .then((res) => res.json())
@@ -433,9 +444,9 @@ export default {
 
     getAppointment() {
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/getAppointment',
+        "http://server.parkviewappointment.com/parkview/reception/getAppointment",
         {
-          method: 'POST',
+          method: "POST",
         }
       )
         .then((res) => res.json())
@@ -447,9 +458,9 @@ export default {
     },
     getAppointmentList() {
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/getAppointmentList',
+        "http://server.parkviewappointment.com/parkview/reception/getAppointmentList",
         {
-          method: 'POST',
+          method: "POST",
         }
       )
         .then((res) => res.json())
@@ -461,9 +472,9 @@ export default {
     getDepartment() {
       const data = new FormData();
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/getDepartment',
+        "http://server.parkviewappointment.com/parkview/reception/getDepartment",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
@@ -495,12 +506,31 @@ export default {
             .toString()
             .toLowerCase()
             .includes(this.session.toString().toLowerCase()) &&
-          post.visitDate
-            .toString()
-            .toLowerCase()
-            .includes(this.visitDate.toString().toLowerCase())
+          this.visitDatestart < post.visitDate &&
+          post.visitDate < this.visitDateend
         ) {
           return post;
+        }
+      });
+    },
+
+    availableDoc() {
+      return this.doctorList.map((item) => {
+        if (
+          item.period == "single" &&
+          item.startDate.toString().includes(this.toDay.toString())
+        ) {
+          return false;
+        }
+
+        if (
+          item.period == "more" &&
+          this.toDay > item.startDate &&
+          item.endDate > this.toDay
+        ) {
+          return false;
+        } else {
+          return item;
         }
       });
     },
