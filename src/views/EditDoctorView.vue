@@ -418,6 +418,7 @@ export default {
           this.max = data.message[0].max;
           this.minCons = data.message[0].min;
           this.advanced = data.message[0].advanced;
+          this.reserved = data.schedule[0].reserved;
         })
         .catch((err) => console.log(err.message));
     },
