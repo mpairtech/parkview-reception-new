@@ -216,9 +216,12 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-lg-12">
+              <div
+                class="col-lg-12"
+                style="height: 30.3rem; overflow-y: scroll; overflow-x: hidden"
+              >
                 <table class="table">
-                  <thead class="text-center thead-color text-white">
+                  <thead class="text-center thead-color text-white sticky-top">
                     <tr class="align-middle">
                       <th class="fw-normal" scope="col" width="20%">
                         Doctor's name

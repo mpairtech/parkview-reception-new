@@ -54,7 +54,7 @@
         >
       </router-link>
     </li>
-    <li
+    <!-- <li
       :class="
         location == '/patientinfo'
           ? 'nav-item mx-5 dashboardNavActive'
@@ -72,7 +72,7 @@
         >
       </router-link>
     </li>
-
+ -->
 
     <li
       :class="

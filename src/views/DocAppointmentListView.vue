@@ -48,7 +48,10 @@
     <div class="container-fluid p-4">
       <div class="row mb-3">
         <div class="col-lg-9 ps-0">
-          <div class="docAppointListBoard bg-white pb-3">
+          <div
+            class="docAppointListBoard bg-white pb-3"
+            style="height: 34.6rem"
+          >
             <div class="row mb-2">
               <div class="col-lg-12">
                 <p class="m-0 fs-5 px-3 py-2 border-bottom border-dark">
@@ -182,54 +185,80 @@
                 </div>
 
                 <!-- Actual Table -->
+                <div
+                  class=""
+                  style="
+                    height: 16.4rem;
+                    overflow-y: scroll;
+                    overflow-x: hidden;
+                  "
+                >
+                  <template v-for="appointment in filteredList">
+                    <div v-if="appointment.doctorId == docId" class="row mb-2">
+                      <div class="col-lg-10">
+                        <div class="patientInfoCard">
+                          <div class="row">
+                            <div class="col-lg-2 pe-0">
+                              <p
+                                class="m-0 pt-2 text-center thBg infoHeight"
+                                style="font-size: 14px"
+                              >
+                                <strong>SL : {{ appointment.serial }}</strong>
+                              </p>
+                            </div>
+                            <div class="col-lg-4 px-0">
+                              <p
+                                class="m-0 pt-2 bg-light px-3 infoHeight"
+                                style="font-size: 14px"
+                              >
+                                <span class="fw-bold">{{
+                                  appointment.name
+                                }}</span>
+                                ({{ appointment.number }})
+                              </p>
+                            </div>
 
-                <template v-for="appointment in filteredList">
-                  <div v-if="appointment.doctorId == docId" class="row mb-2">
-                    <div class="col-lg-10">
-                      <div class="patientInfoCard">
-                        <div class="row">
-                          <div class="col-lg-2 pe-0">
-                            <p class="m-0 pt-2 text-center thBg infoHeight">
-                              <strong>SL : {{ appointment.serial }}</strong>
-                            </p>
-                          </div>
-                          <div class="col-lg-4 px-0">
-                            <p class="m-0 pt-2 bg-light px-3 infoHeight">
-                              {{ appointment.name }}
-                            </p>
-                          </div>
+                            <div class="col-lg-2 px-0">
+                              <p
+                                class="m-0 pt-2 bg-light px-3 infoHeight"
+                                style="font-size: 14px"
+                              >
+                                Date : {{ appointment.visitDate }}
+                              </p>
+                            </div>
 
-                          <div class="col-lg-2 px-0">
-                            <p class="m-0 pt-2 bg-light px-3 infoHeight">
-                              Date : {{ appointment.visitDate }}
-                            </p>
-                          </div>
-
-                          <div class="col-lg-2 px-0">
-                            <p class="m-0 pt-2 text-center thBg infoHeight">
-                              Age : {{ appointment.age }}
-                            </p>
-                          </div>
-                          <div class="col-lg-2 ps-0">
-                            <p class="m-0 pt-2 text-center bg-light infoHeight">
-                              {{ appointment.period }}
-                            </p>
+                            <div class="col-lg-2 px-0">
+                              <p
+                                class="m-0 pt-2 text-center thBg infoHeight"
+                                style="font-size: 14px"
+                              >
+                                Age : {{ appointment.age }}
+                              </p>
+                            </div>
+                            <div class="col-lg-2 ps-0">
+                              <p
+                                class="m-0 pt-2 text-center bg-light infoHeight"
+                                style="font-size: 14px"
+                              >
+                                {{ appointment.period }}
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
+                      <div class="col-lg-2 ps-0">
+                        <button
+                          class="btn cancelBtn rounded-0 text-white w-100"
+                          @click="this.delid = appointment.id"
+                          data-bs-toggle="modal"
+                          data-bs-target="#deleteConfirmModal"
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </div>
-                    <div class="col-lg-2 ps-0">
-                      <button
-                        class="btn cancelBtn rounded-0 text-white w-100"
-                        @click="this.delid = appointment.id"
-                        data-bs-toggle="modal"
-                        data-bs-target="#deleteConfirmModal"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                </template>
+                  </template>
+                </div>
               </div>
             </div>
           </div>

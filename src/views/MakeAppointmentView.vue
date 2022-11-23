@@ -190,35 +190,6 @@
                                 v-model="visitDate"
                                 readonly
                               />
-                              <!-- 
-                              <button
-                                @click="
-                                  this.showDatepicker = !this.showDatepicker
-                                "
-                                class="form-control form-control-sm rounded-0 w-100"
-                              >
-                                {{
-                                  visitDate === ""
-                                    ? "Select Date"
-                                    : convertDate(visitDate)
-                                }}
-                              </button> -->
-
-                              <!-- <v-date-picker
-                                v-if="showDatepicker"
-                                v-model="visitDate"
-                                @click="getSerialSuggetion"
-                                mode="date"
-                                timezone=""
-                                :available-dates="{
-                                  start: new Date(),
-                                  end: this.addDays(7, toDay),
-                                  weekdays: [
-                                    Number(wdays.indexOf(visitDay) + 1),
-                                  ],
-                                }"
-                                style="position: absolute"
-                              /> -->
                             </div>
                           </div>
                         </div>

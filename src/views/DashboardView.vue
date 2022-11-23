@@ -32,9 +32,9 @@
         </div>
         <div class="col-lg-3 my-3">
           <div class="menuCard mx-auto rounded bg-white">
-            <router-link to="/patientinfo" class="text-dark">
+            <router-link to="/patient" class="text-dark">
               <p class="text-center py-4 fs-5" style="font-weight: 450">
-                Patient Info
+                Patient User
               </p>
             </router-link>
           </div>
@@ -69,75 +69,86 @@
               </div>
             </div>
             <div class="row table-padding">
-              <table class="table">
-                <thead class="text-center thead-color text-white">
-                  <tr>
-                    <th class="fw-normal" scope="col" width="20%">
-                      Doctor's name
-                    </th>
-                    <th class="fw-normal" scope="col" width="20%">
-                      Designation
-                    </th>
-                    <th class="fw-normal" scope="col">Department</th>
-                    <th class="fw-normal" scope="col">Room</th>
-                    <th class="fw-normal" scope="col">Fee</th>
-                    <th class="fw-normal" scope="col" width="15%">Available</th>
-                    <th class="fw-normal" scope="col" width="10%">On Leave</th>
-                  </tr>
-                </thead>
-                <tbody class="text-center">
-                  <tr v-for="doc in filteredList" class="align-middle">
-                    <template
-                      v-if="
-                        doc.department
-                          .toString()
-                          .toLowerCase()
-                          .includes(this.deptSelect.toString().toLowerCase())
-                      "
-                    >
-                      <td class="table-font-size">
-                        <strong>{{ doc.doctor }}</strong>
-                      </td>
-                      <td
-                        class="designation-font"
-                        style="font-size: 12px !important"
+              <div
+                class="col-lg-12"
+                style="height: 28.8rem; overflow-y: scroll; overflow-x: hidden"
+              >
+                <table class="table">
+                  <thead class="text-center thead-color text-white sticky-top">
+                    <tr>
+                      <th class="fw-normal" scope="col" width="20%">
+                        Doctor's name
+                      </th>
+                      <th class="fw-normal" scope="col" width="20%">
+                        Designation
+                      </th>
+                      <th class="fw-normal" scope="col">Department</th>
+                      <th class="fw-normal" scope="col">Room</th>
+                      <th class="fw-normal" scope="col">Fee</th>
+                      <th class="fw-normal" scope="col" width="15%">
+                        Available
+                      </th>
+                      <th class="fw-normal" scope="col" width="10%">
+                        On Leave
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-center">
+                    <tr v-for="doc in filteredList" class="align-middle">
+                      <template
+                        v-if="
+                          doc.department
+                            .toString()
+                            .toLowerCase()
+                            .includes(this.deptSelect.toString().toLowerCase())
+                        "
                       >
-                        {{ doc.qualification }}
-                        Parkview Hospital
-                      </td>
-                      <td class="table-font-size">
-                        <strong>{{ doc.department }}</strong>
-                      </td>
-                      <td class="table-font-size">{{ doc.room }}</td>
-                      <td class="table-font-size">{{ doc.fee }} BDT</td>
-                      <td class="table-font-size">
-                        <div v-for="sche in docSchedule">
-                          <div v-if="sche.doctorId === doc.id">
-                            <p class="m-0" style="font-size: 12px">
-                              {{ sche.startFrom }} - {{ sche.endTo }} (
-                              {{ sche.day }} )
-                            </p>
+                        <td class="table-font-size">
+                          <strong>{{ doc.doctor }}</strong>
+                        </td>
+                        <td
+                          class="designation-font"
+                          style="font-size: 12px !important"
+                        >
+                          {{ doc.qualification }}
+                          Parkview Hospital
+                        </td>
+                        <td class="table-font-size">
+                          <strong>{{ doc.department }}</strong>
+                        </td>
+                        <td class="table-font-size">{{ doc.room }}</td>
+                        <td class="table-font-size">{{ doc.fee }} BDT</td>
+                        <td class="table-font-size">
+                          <div v-for="sche in docSchedule">
+                            <div v-if="sche.doctorId === doc.id">
+                              <p class="m-0" style="font-size: 12px">
+                                {{ sche.startFrom }} - {{ sche.endTo }} (
+                                {{ sche.day }} )
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td class="table-font-size">
-                        <p v-if="doc.period == 'single'" class="m-0">
-                          {{ doc.startDate }}
-                        </p>
-                        <p v-if="doc.period == 'more'" class="m-0">
-                          {{ doc.startDate }} - {{ doc.endDate }}
-                        </p>
-                      </td>
-                    </template>
-                  </tr>
-                </tbody>
-              </table>
+                        </td>
+                        <td class="table-font-size">
+                          <p v-if="doc.period == 'single'" class="m-0">
+                            {{ doc.startDate }}
+                          </p>
+                          <p v-if="doc.period == 'more'" class="m-0">
+                            {{ doc.startDate }} - {{ doc.endDate }}
+                          </p>
+                        </td>
+                      </template>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
         <div class="col-lg-3">
-          <div class="availableDocCanvas bg-white">
-            <div class="row p-2 align-items-center border-bottom">
+          <div class="availableDocCanvas bg-white" style="height: 32rem">
+            <div
+              class="row p-2 align-items-center border-bottom sticky-top bg-white"
+            >
               <div class="col-lg-6">
                 <p class="m-0 fw-bold">Available Today</p>
               </div>

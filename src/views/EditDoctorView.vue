@@ -112,7 +112,7 @@
                           <img
                             v-if="preview == false && image != ''"
                             :src="[
-                              'https://parkviewappointment.com/image/' + image,
+                              'http://parkviewappointment.com/image/' + image,
                             ]"
                             class="doctorDP"
                             alt="..."
@@ -127,7 +127,7 @@
                           <p v-if="image == ''" style="cursor: pointer">
                             <img
                               :src="[
-                                'https://parkviewappointment.com/image/pngegg.png',
+                                'http://parkviewappointment.com/image/pngegg.png',
                               ]"
                               alt=""
                             />
@@ -346,12 +346,10 @@
               <div class="" v-if="activeTab == 'available'">
                 <div class="container">
                   <div class="row justify-content-center">
-                    <div class="col-lg-8 pb-2 py-5">
+                    <div class="col-lg-8 py-3">
                       <div class="card bg-light border-0 p-2">
                         <div class="card-body">
-                          <p class="fw-bold font-14 mb-0">
-                            Unavailable Period {{ period }}
-                          </p>
+                          <p class="fw-bold font-14 mb-0">Unavailable Period</p>
 
                           <div class="form-check my-2">
                             <input
@@ -415,7 +413,7 @@
                               More Day
                             </label>
                           </div>
-                          <div class="row my-2">
+                          <div class="row my-2 mb-3">
                             <div class="col-lg-8 d-flex my-auto">
                               <input
                                 type="date"
@@ -526,7 +524,7 @@ export default {
       data.append("id", this.id);
 
       fetch(
-        `https://server.parkviewappointment.com/parkview/reception/getDoctorById`,
+        `http://server.parkviewappointment.com/parkview/reception/getDoctorById`,
         {
           method: "POST",
           body: data,
@@ -563,7 +561,7 @@ export default {
       const data = new FormData();
       data.append("id", id);
       fetch(
-        "https://server.parkviewappointment.com/parkview/admin/deleteSchedule",
+        "http://server.parkviewappointment.com/parkview/admin/deleteSchedule",
         {
           method: "POST",
           body: data,
@@ -643,7 +641,7 @@ export default {
       data.append("doctorId", this.docId);
       data.append("reserved", this.reserved);
       fetch(
-        "https://server.parkviewappointment.com/parkview/reception/docSchedulePost",
+        "http://server.parkviewappointment.com/parkview/reception/docSchedulePost",
         {
           method: "POST",
           body: data,
@@ -664,7 +662,7 @@ export default {
       const data = new FormData();
       data.append("doctorId", this.docId);
       fetch(
-        "https://server.parkviewappointment.com/parkview/reception/getSchedule",
+        "http://server.parkviewappointment.com/parkview/reception/getSchedule",
         {
           method: "POST",
           body: data,
@@ -745,7 +743,7 @@ export default {
       data.append("advanced", this.advanced);
 
       fetch(
-        "https://server.parkviewappointment.com/parkview/reception/updateDoctor",
+        "http://server.parkviewappointment.com/parkview/reception/updateDoctor",
         {
           method: "POST",
           body: data,
@@ -773,7 +771,7 @@ export default {
       data.append("id", this.id);
 
       fetch(
-        "https://server.parkviewappointment.com/parkview/reception/upAvailable",
+        "http://server.parkviewappointment.com/parkview/reception/upAvailable",
         {
           method: "POST",
           body: data,

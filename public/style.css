@@ -3,6 +3,26 @@
 * {
   font-family: "Roboto", sans-serif;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(73, 73, 73);
+}
 body {
   background-color: #e4e9eb;
 }
@@ -32,9 +52,11 @@ a {
 .designation-font {
   font-size: 0.75rem;
 }
-/* .availableDocCanvas {
-  height: 20rem;
-} */
+.availableDocCanvas {
+  height: 26rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
 .roomNo {
   background-color: #195972;
   font-size: 1rem;

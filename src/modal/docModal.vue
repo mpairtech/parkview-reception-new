@@ -160,21 +160,21 @@
                             class="row bg-light rounded"
                           >
                             <div class="col-lg-12 px-4 py-3">
-                              <div class="row mb-3">
+                              <div class="row mb-1">
                                 <div class="col-lg-4">
                                   <label class="form-check-label fw-bold"
-                                    >Unavailable Period
+                                    >On Leave
                                   </label>
                                 </div>
                               </div>
-                              <div class="row mb-2"></div>
+
                               <div class="row">
                                 <div
                                   class="col-lg-6"
                                   v-if="doc.period == 'single'"
                                 >
                                   <p
-                                    class="form-control form-control-sm border-dark"
+                                    class="form-control form-control-sm border-dark text-danger"
                                   >
                                     {{ doc.startDate }}
                                   </p>
@@ -185,12 +185,12 @@
                                   v-if="doc.period == 'more'"
                                 >
                                   <p
-                                    class="form-control form-control-sm border-dark"
+                                    class="form-control form-control-sm border-dark text-danger"
                                   >
                                     {{ doc.startDate }}
                                   </p>
                                   <p
-                                    class="form-control form-control-sm border-dark"
+                                    class="form-control form-control-sm border-dark text-danger"
                                   >
                                     {{ doc.endDate }}
                                   </p>
@@ -261,15 +261,15 @@
   </div>
 </template>
 <script>
-import BasicInfo from '@/components/BasicInfo.vue';
-import ConsultancyPeriod from '../components/ConsultancyPeriod.vue';
-import UserInfo from '@/components/UserInfo.vue';
+import BasicInfo from "@/components/BasicInfo.vue";
+import ConsultancyPeriod from "../components/ConsultancyPeriod.vue";
+import UserInfo from "@/components/UserInfo.vue";
 export default {
-  name: 'Docmodal',
-  props: ['active', 'activeDoc', 'update', 'changeUp', 'close'],
+  name: "Docmodal",
+  props: ["active", "activeDoc", "update", "changeUp", "close"],
   data() {
     return {
-      activeItem: 'basicInfo',
+      activeItem: "basicInfo",
       docList: [],
       scheDules: [],
       userInfo: [],
@@ -297,11 +297,11 @@ export default {
 
     getSchedule() {
       const data = new FormData();
-      data.append('doctorId', this.activeDoc);
+      data.append("doctorId", this.activeDoc);
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/getSchedule',
+        "http://server.parkviewappointment.com/parkview/reception/getSchedule",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
@@ -314,11 +314,11 @@ export default {
 
     getDoctorlist() {
       const data = new FormData();
-      data.append('id', this.activeDoc);
+      data.append("id", this.activeDoc);
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/getDoctorById',
+        "http://server.parkviewappointment.com/parkview/reception/getDoctorById",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
