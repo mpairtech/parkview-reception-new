@@ -193,11 +193,19 @@
                               <strong>SL : {{ appointment.serial }}</strong>
                             </p>
                           </div>
-                          <div class="col-lg-6 px-0">
+                          <div class="col-lg-4 px-0">
                             <p class="m-0 pt-2 bg-light px-3 infoHeight">
                               {{ appointment.name }}
                             </p>
                           </div>
+
+                          <div class="col-lg-2 px-0">
+                            <p class="m-0 pt-2 bg-light px-3 infoHeight">
+                              Date : {{ appointment.visitDate }}
+                            </p>
+                          </div>
+
+
                           <div class="col-lg-2 px-0">
                             <p class="m-0 pt-2 text-center thBg infoHeight">
                               Age : {{ appointment.age }}
@@ -506,11 +514,12 @@ export default {
             .toString()
             .toLowerCase()
             .includes(this.session.toString().toLowerCase()) &&
-          this.visitDatestart < post.visitDate &&
-          post.visitDate < this.visitDateend
+          (this.visitDatestart < post.visitDate || this.visitDatestart.includes(post.visitDate)) &&
+          (post.visitDate < this.visitDateend || this.visitDateend.includes(post.visitDate)) || 
+          this.visitDatestart == ''
         ) {
           return post;
-        }
+          }
       });
     },
 

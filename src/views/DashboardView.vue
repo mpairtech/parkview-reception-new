@@ -81,7 +81,8 @@
                     <th class="fw-normal" scope="col">Department</th>
                     <th class="fw-normal" scope="col">Room</th>
                     <th class="fw-normal" scope="col">Consultancy Fee</th>
-                    <th class="fw-normal" scope="col" width="20%">Available</th>
+                    <th class="fw-normal" scope="col" width="10%">Available</th>
+                    <th class="fw-normal" scope="col" width="10%">On Leave</th>
                   </tr>
                 </thead>
                 <tbody class="text-center">
@@ -115,6 +116,14 @@
                             </p>
                           </div>
                         </div>
+                      </td>
+                      <td class="table-font-size">
+                         <p v-if="doc.period == 'single'" class="m-0">
+                           {{doc.startDate}}
+                         </p>
+                         <p v-if="doc.period == 'more'" class="m-0">
+                           {{doc.startDate}} - {{doc.endDate}}
+                         </p>
                       </td>
                     </template>
                   </tr>

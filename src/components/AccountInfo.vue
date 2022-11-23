@@ -143,6 +143,13 @@ export default {
         return false;
       }
 
+      if (this.password != this.repassword) {
+        this.toast.error("Password do not match", {
+          timeout: 4000,
+        });
+        return false;
+      }
+
       this.load = true;
       const data = new FormData();
       data.append("docId", this.docId);

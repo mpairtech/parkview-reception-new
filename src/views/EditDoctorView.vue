@@ -346,6 +346,26 @@
                           <p class="fw-bold font-14 mb-0">
                             Unavailable Period {{ period }}
                           </p>
+
+                          <div class="form-check my-2">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="flexRadioDefault"
+                              id="flexRadioDefault1"
+                              value=""
+                              v-model="period"
+                            />
+                            <label
+                              class="form-check-label"
+                              for="flexRadioDefault1"
+                            >
+                              Available
+                            </label>
+                          </div>
+
+
+
                           <div class="form-check my-2">
                             <input
                               class="form-check-input"
@@ -411,7 +431,7 @@
 
                           <button
                             @click="upAvailable"
-                            class="btn downButton btnMargin text-white w-100 rounded-0 py-3 mb-2"
+                            class="btn downButton text-white w-100 rounded-0 py-3 mb-2"
                           >
                             Update
                           </button>
