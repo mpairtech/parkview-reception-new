@@ -37,7 +37,7 @@
 
   <div class="canvasBoard">
     <div class="container-fluid p-4">
-      <div class="row">
+      <div class="row mb-3">
         <div class="col-lg-12 ps-0">
           <div class="bg-white pb-3">
             <div class="row mb-2">
@@ -330,33 +330,33 @@
   <FooterVue />
 </template>
 <script>
-import TopNav from '@/components/TopNav.vue';
-import DashboardNav from '@/components/DashboardNav.vue';
+import TopNav from "@/components/TopNav.vue";
+import DashboardNav from "@/components/DashboardNav.vue";
 
-import { useToast } from 'vue-toastification';
-import FooterVue from '@/components/Footer.vue';
+import { useToast } from "vue-toastification";
+import FooterVue from "@/components/Footer.vue";
 export default {
   components: { TopNav, DashboardNav, FooterVue },
   data() {
     return {
       userData: [],
-      name: '',
-      mobile: '',
-      nid: '',
-      email: '',
-      gender: '',
-      password: '',
-      rpassword: '',
+      name: "",
+      mobile: "",
+      nid: "",
+      email: "",
+      gender: "",
+      password: "",
+      rpassword: "",
       update: 0,
-      delid: '',
+      delid: "",
       preloader: true,
-      message: '',
-      gender: '',
-      oldpass: '',
-      newpass: '',
-      rnewpass: '',
-      searchTerm: '',
-      searchDate: '',
+      message: "",
+      gender: "",
+      oldpass: "",
+      newpass: "",
+      rnewpass: "",
+      searchTerm: "",
+      searchDate: "",
     };
   },
   setup() {
@@ -373,30 +373,30 @@ export default {
   },
   methods: {
     clearFields() {
-      this.name = '';
-      this.mobile = '';
-      this.email = '';
-      this.password = '';
-      this.rnewpass = '';
-      this.nid = '';
+      this.name = "";
+      this.mobile = "";
+      this.email = "";
+      this.password = "";
+      this.rnewpass = "";
+      this.nid = "";
     },
     newPatient() {
       if (this.password != this.rpassword) {
-        alert('Password do not match');
+        alert("Password do not match");
         return false;
       }
       const data = new FormData();
-      data.append('name', this.name);
-      data.append('mobile', this.mobile);
-      data.append('nid', this.nid);
-      data.append('email', this.email);
-      data.append('gender', this.gender);
-      data.append('password', this.password);
+      data.append("name", this.name);
+      data.append("mobile", this.mobile);
+      data.append("nid", this.nid);
+      data.append("email", this.email);
+      data.append("gender", this.gender);
+      data.append("password", this.password);
 
       fetch(
-        'http://server.parkviewappointment.com/parkview/patient/newPatient',
+        "http://server.parkviewappointment.com/parkview/patient/newPatient",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
@@ -404,7 +404,7 @@ export default {
         .then((res) => {
           if (res.message == null) {
             this.clearFields();
-            this.toast.success('New Patient Added', {
+            this.toast.success("New Patient Added", {
               timeout: 1000,
             });
             this.update = 1;
@@ -418,11 +418,11 @@ export default {
     },
     delUser(id) {
       const data = new FormData();
-      data.append('id', id);
+      data.append("id", id);
       fetch(
-        'http://server.parkviewappointment.com/parkview/admin/deletePatient',
+        "http://server.parkviewappointment.com/parkview/admin/deletePatient",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
@@ -435,9 +435,9 @@ export default {
 
     getUser() {
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/getPatient',
+        "http://server.parkviewappointment.com/parkview/reception/getPatient",
         {
-          method: 'POST',
+          method: "POST",
         }
       )
         .then((res) => res.json())
@@ -449,43 +449,43 @@ export default {
     },
 
     updatePass() {
-      if (this.oldpass == '') {
-        this.toast.success('Password field is empty', {
+      if (this.oldpass == "") {
+        this.toast.success("Password field is empty", {
           timeout: 4000,
         });
         return false;
       }
 
-      if (this.newpass == '') {
-        this.toast.success('New Password field is empty', {
+      if (this.newpass == "") {
+        this.toast.success("New Password field is empty", {
           timeout: 4000,
         });
         return false;
       }
 
       if (this.newpass != this.rnewpass) {
-        this.toast.warning('Password do not match', {
+        this.toast.warning("Password do not match", {
           timeout: 4000,
         });
         return false;
       }
 
       const data = new FormData();
-      data.append('opass', this.oldpass);
-      data.append('pass', this.newpass);
-      data.append('uid', this.delid);
+      data.append("opass", this.oldpass);
+      data.append("pass", this.newpass);
+      data.append("uid", this.delid);
 
       fetch(
-        'http://server.parkviewappointment.com/parkview/admin/updatepatientPass',
+        "http://server.parkviewappointment.com/parkview/admin/updatepatientPass",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
         .then((res) => res.json())
         .then((res) => {
           if (res.message == true) {
-            this.toast.success('User Password Updated', {
+            this.toast.success("User Password Updated", {
               timeout: 4000,
             });
           } else {
@@ -502,7 +502,7 @@ export default {
     this.getUser();
     var month = new Date().getMonth();
     month = Number(month) + 1;
-    this.searchDate = new Date().getFullYear() + '-' + month;
+    this.searchDate = new Date().getFullYear() + "-" + month;
   },
 
   computed: {

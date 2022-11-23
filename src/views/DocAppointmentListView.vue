@@ -36,7 +36,7 @@
             data-bs-dismiss="modal"
             @click="delAppo(this.delid)"
           >
-            Delete
+            Cancel
           </button>
         </div>
       </div>
@@ -46,7 +46,7 @@
 
   <div class="canvasBoard">
     <div class="container-fluid p-4">
-      <div class="row">
+      <div class="row mb-3">
         <div class="col-lg-9 ps-0">
           <div class="docAppointListBoard bg-white pb-3">
             <div class="row mb-2">
@@ -205,7 +205,6 @@
                             </p>
                           </div>
 
-
                           <div class="col-lg-2 px-0">
                             <p class="m-0 pt-2 text-center thBg infoHeight">
                               Age : {{ appointment.age }}
@@ -273,7 +272,7 @@
                     >
                       <div
                         v-if="doctor.department.includes(this.docDeptSelect)"
-                        class="row bg-light availDocMargin align-items-center"
+                        class="row bg-light availDocMargin align-items-center border-bottom py-2"
                       >
                         <div class="col-lg-8">
                           <p class="m-0 fw-bold">{{ doctor.doctor }}</p>
@@ -510,16 +509,18 @@ export default {
     filteredList() {
       return this.appointmentsList?.filter((post) => {
         if (
-          post.visitSession
+          (post.visitSession
             .toString()
             .toLowerCase()
             .includes(this.session.toString().toLowerCase()) &&
-          (this.visitDatestart < post.visitDate || this.visitDatestart.includes(post.visitDate)) &&
-          (post.visitDate < this.visitDateend || this.visitDateend.includes(post.visitDate)) || 
-          this.visitDatestart == ''
+            (this.visitDatestart < post.visitDate ||
+              this.visitDatestart.includes(post.visitDate)) &&
+            (post.visitDate < this.visitDateend ||
+              this.visitDateend.includes(post.visitDate))) ||
+          this.visitDatestart == ""
         ) {
           return post;
-          }
+        }
       });
     },
 

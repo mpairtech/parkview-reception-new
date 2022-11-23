@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row mb-3">
         <div class="col-lg-9">
           <div class="doctorInfoCanvas bg-white">
             <div class="row py-2">
@@ -75,13 +75,13 @@
                     <th class="fw-normal" scope="col" width="20%">
                       Doctor's name
                     </th>
-                    <th class="fw-normal" scope="col" width="18%">
+                    <th class="fw-normal" scope="col" width="20%">
                       Designation
                     </th>
                     <th class="fw-normal" scope="col">Department</th>
                     <th class="fw-normal" scope="col">Room</th>
-                    <th class="fw-normal" scope="col">Consultancy Fee</th>
-                    <th class="fw-normal" scope="col" width="10%">Available</th>
+                    <th class="fw-normal" scope="col">Fee</th>
+                    <th class="fw-normal" scope="col" width="15%">Available</th>
                     <th class="fw-normal" scope="col" width="10%">On Leave</th>
                   </tr>
                 </thead>
@@ -98,7 +98,10 @@
                       <td class="table-font-size">
                         <strong>{{ doc.doctor }}</strong>
                       </td>
-                      <td class="designation-font">
+                      <td
+                        class="designation-font"
+                        style="font-size: 12px !important"
+                      >
                         {{ doc.qualification }}
                         Parkview Hospital
                       </td>
@@ -110,7 +113,7 @@
                       <td class="table-font-size">
                         <div v-for="sche in docSchedule">
                           <div v-if="sche.doctorId === doc.id">
-                            <p class="m-0">
+                            <p class="m-0" style="font-size: 12px">
                               {{ sche.startFrom }} - {{ sche.endTo }} (
                               {{ sche.day }} )
                             </p>
@@ -118,12 +121,12 @@
                         </div>
                       </td>
                       <td class="table-font-size">
-                         <p v-if="doc.period == 'single'" class="m-0">
-                           {{doc.startDate}}
-                         </p>
-                         <p v-if="doc.period == 'more'" class="m-0">
-                           {{doc.startDate}} - {{doc.endDate}}
-                         </p>
+                        <p v-if="doc.period == 'single'" class="m-0">
+                          {{ doc.startDate }}
+                        </p>
+                        <p v-if="doc.period == 'more'" class="m-0">
+                          {{ doc.startDate }} - {{ doc.endDate }}
+                        </p>
                       </td>
                     </template>
                   </tr>
@@ -151,7 +154,7 @@
               </div>
             </div>
             <div
-              class="row bg-light availDocMargin py-2 align-items-center"
+              class="row bg-light availDocMargin py-2 align-items-center border-bottom"
               v-for="docs in filteredDoc"
             >
               <template v-if="docs.department.includes(this.docDeptSelect)">
@@ -159,7 +162,10 @@
                   <p class="m-0 fw-bold">
                     {{ docs.doctor }}
                   </p>
-                  <p class="m-0 designation-font">
+                  <p
+                    class="m-0 designation-font"
+                    style="font-size: 11px !important"
+                  >
                     <b>{{ docs.department }}</b
                     ><br />
                     {{ docs.qualification }}
@@ -183,24 +189,24 @@
 </template>
 
 <script>
-import TopNav from '../components/TopNav.vue';
-import Footer from '@/components/Footer.vue';
+import TopNav from "../components/TopNav.vue";
+import Footer from "@/components/Footer.vue";
 export default {
   data() {
     return {
-      deptSelect: '',
+      deptSelect: "",
       doctorList: [],
       docSchedule: [],
       department: [],
-      doctorSearch: '',
-      doctorSelect: '',
+      doctorSearch: "",
+      doctorSelect: "",
       docAppointments: [],
-      thisDay: '',
-      wdays: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
-      docDeptSelect: '',
+      thisDay: "",
+      wdays: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
+      docDeptSelect: "",
     };
   },
-  name: 'DashboardView',
+  name: "DashboardView",
   components: { TopNav, Footer },
 
   mounted() {
@@ -213,9 +219,9 @@ export default {
   methods: {
     getDocAppointment() {
       fetch(
-        'http://server.parkviewappointment.com/parkview/admin/getAppointmentInfo',
+        "http://server.parkviewappointment.com/parkview/admin/getAppointmentInfo",
         {
-          method: 'POST',
+          method: "POST",
         }
       )
         .then((res) => res.json())
@@ -227,9 +233,9 @@ export default {
     },
     getDoctorlist() {
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/getDoctor',
+        "http://server.parkviewappointment.com/parkview/reception/getDoctor",
         {
-          method: 'POST',
+          method: "POST",
         }
       )
         .then((res) => res.json())
@@ -243,9 +249,9 @@ export default {
     getDepartment() {
       const data = new FormData();
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/getDepartment',
+        "http://server.parkviewappointment.com/parkview/reception/getDepartment",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )

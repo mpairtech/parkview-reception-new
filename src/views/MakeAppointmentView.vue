@@ -18,7 +18,7 @@
 
   <div class="canvasBoard">
     <div class="container-fluid p-4">
-      <div class="row">
+      <div class="row mb-3">
         <div class="col-lg-8 mx-auto">
           <div class="row mb-3">
             <div class="col-lg-12">
@@ -316,7 +316,7 @@
             </div>
             <div class="col-lg-12 appointBody px-0">
               <div v-for="appointment in appointments" class="row py-4 px-3">
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                   <p class="mb-1 px-3 label-font">Patient Info</p>
                   <p class="m-0 px-3 fw-bold">{{ appointment.name }}</p>
                   <p class="m-0 px-3 text-dark" style="font-size: 0.9rem">
@@ -326,12 +326,15 @@
                     {{ appointment.number }}
                   </p>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                   <p class="mb-1 px-3 label-font">Doctor Info</p>
                   <p class="m-0 px-3">
                     <b>{{ appointment.doctor }}</b>
                   </p>
-                  <p class="m-0 px-3 designation-font">
+                  <p
+                    class="m-0 px-3 designation-font"
+                    style="font-size: 12px !important"
+                  >
                     {{ appointment.qualification }} (
                     {{ appointment.department }} )
                   </p>

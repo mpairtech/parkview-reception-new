@@ -94,7 +94,7 @@
                     @click="this.activeTab = 'available'"
                     style="cursor: pointer"
                     ><p class="m-0 fs-6 text-dark">
-                      <strong>Availability</strong>
+                      <strong>On Leave</strong>
                     </p></a
                   >
                 </li>
@@ -112,7 +112,7 @@
                           <img
                             v-if="preview == false && image != ''"
                             :src="[
-                              'http://parkviewappointment.com/image/' + image,
+                              'https://parkviewappointment.com/image/' + image,
                             ]"
                             class="doctorDP"
                             alt="..."
@@ -125,6 +125,12 @@
                             alt="..."
                           />
                           <p v-if="image == ''" style="cursor: pointer">
+                            <img
+                              :src="[
+                                'https://parkviewappointment.com/image/pngegg.png',
+                              ]"
+                              alt=""
+                            />
                             Choose Photo
                           </p>
                         </label>
@@ -364,8 +370,6 @@
                             </label>
                           </div>
 
-
-
                           <div class="form-check my-2">
                             <input
                               class="form-check-input"
@@ -522,7 +526,7 @@ export default {
       data.append("id", this.id);
 
       fetch(
-        `http://server.parkviewappointment.com/parkview/reception/getDoctorById`,
+        `https://server.parkviewappointment.com/parkview/reception/getDoctorById`,
         {
           method: "POST",
           body: data,
@@ -559,7 +563,7 @@ export default {
       const data = new FormData();
       data.append("id", id);
       fetch(
-        "http://server.parkviewappointment.com/parkview/admin/deleteSchedule",
+        "https://server.parkviewappointment.com/parkview/admin/deleteSchedule",
         {
           method: "POST",
           body: data,
@@ -639,7 +643,7 @@ export default {
       data.append("doctorId", this.docId);
       data.append("reserved", this.reserved);
       fetch(
-        "http://server.parkviewappointment.com/parkview/reception/docSchedulePost",
+        "https://server.parkviewappointment.com/parkview/reception/docSchedulePost",
         {
           method: "POST",
           body: data,
@@ -660,7 +664,7 @@ export default {
       const data = new FormData();
       data.append("doctorId", this.docId);
       fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getSchedule",
+        "https://server.parkviewappointment.com/parkview/reception/getSchedule",
         {
           method: "POST",
           body: data,
@@ -741,7 +745,7 @@ export default {
       data.append("advanced", this.advanced);
 
       fetch(
-        "http://server.parkviewappointment.com/parkview/reception/updateDoctor",
+        "https://server.parkviewappointment.com/parkview/reception/updateDoctor",
         {
           method: "POST",
           body: data,
