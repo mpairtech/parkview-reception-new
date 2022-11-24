@@ -215,6 +215,7 @@ export default {
       thisDay: "",
       wdays: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
       docDeptSelect: "",
+      toDay: "",
     };
   },
   name: "DashboardView",
@@ -226,6 +227,7 @@ export default {
     this.getDocAppointment();
     let day = new Date();
     this.thisDay = Number(day.getDay());
+    this.toDay = this.formatDate(day);
   },
   methods: {
     getDocAppointment() {
@@ -273,6 +275,30 @@ export default {
         })
         .catch((err) => console.log(err.message));
     },
+
+    formatDate(date) {
+      var date = new Date(date);
+      var hours = date.getHours();
+      var minutes = date.getMinutes();
+      var ampm = hours >= 12 ? "pm" : "am";
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour "0" should be "12"
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      var strTime = hours + ":" + minutes + " " + ampm;
+
+      var month = date.getMonth() + 1;
+      if (month < 10) {
+        month = "0" + month;
+      }
+
+      var tdate = date.getDate();
+
+      if (tdate < 10) {
+        tdate = "0" + tdate;
+      }
+
+      return date.getFullYear() + "-" + month + "-" + tdate;
+    },
   },
 
   computed: {
@@ -290,6 +316,22 @@ export default {
     },
     filteredDoc() {
       return this.docAppointments?.filter((post) => {
+        if (
+          post.period == "single" &&
+          post.startDate.toString().includes(this.toDay.toString())
+        ) {
+          return false;
+        }
+
+        if (
+          post.period == "more" &&
+          this.toDay > post.startDate &&
+          post.endDate > this.toDay
+        ) {
+          return false;
+        }
+
+
         if (
           post.day
             .toString()
