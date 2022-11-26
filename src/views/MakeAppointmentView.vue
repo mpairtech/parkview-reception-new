@@ -234,7 +234,12 @@
                                   class="form-select form-select-sm rounded-0 label-font"
                                   disabled
                                 >
-                                  <option>{{ period }} Min</option>
+                                  <option>
+                                    {{ period }}
+                                    <template v-if="this.serial != undefinded"
+                                      >Min</template
+                                    >
+                                  </option>
                                 </select>
                               </div>
                               <div class="col-lg-3 ps-0">
@@ -596,19 +601,24 @@ export default {
             }
             const B = res.serial;
 
-            console.log(res.serial);
-            console.log(res.reserved);
             this.serial = A.filter((n) => !B.includes(n))[0];
             // console.log(A.filter((n) => !B.includes(n)));
+
+            console.log(this.serial);
 
             this.startFrom = res.startfrom;
             this.load = false;
 
-            this.period =
-              this.addMinutes(Number(this.min) * (Number(this.serial) - 1)) +
-              "-" +
-              this.addMinutes(Number(this.min) * Number(this.serial));
-            this.overview = true;
+            if (this.serial != undefined) {
+              this.period =
+                this.addMinutes(Number(this.min) * (Number(this.serial) - 1)) +
+                "-" +
+                this.addMinutes(Number(this.min) * Number(this.serial));
+              this.overview = true;
+            } else {
+              this.period = "No serial available";
+              this.overview = true;
+            }
           })
           .catch((err) => console.log(err.message));
       }

@@ -257,10 +257,12 @@ export default {
       )
         .then((res) => res.json())
         .then((res) => {
-          this.load = false;
-          this.docId(res.message);
-          this.max(this.maxCons);
-          this.next();
+          if (res.message == null) {
+          } else {
+            this.docId(res.message);
+            this.max(this.maxCons);
+            this.next();
+          }
         })
         .catch((err) => console.log(err.message));
     },

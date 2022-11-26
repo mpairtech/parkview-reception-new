@@ -60,7 +60,7 @@
                 <AccountInfo :next="changeAcc" :docId="docId" />
               </div>
             </div>
-          </div>
+          </div> 
         </div>
       </div>
     </div>

@@ -71,27 +71,27 @@
 
 <script>
 export default {
-  name: 'Schedule',
+  name: "Schedule",
   props: [
-    'active',
-    'docId',
-    'max',
-    'min',
-    'setData',
-    'visitDate',
-    'day',
-    'session',
-    'update',
-    'setupdate',
-    'close',
+    "active",
+    "docId",
+    "max",
+    "min",
+    "setData",
+    "visitDate",
+    "day",
+    "session",
+    "update",
+    "setupdate",
+    "close",
   ],
   data() {
     return {
       appointments: [],
-      reserved: '',
-      docInfo: '',
-      startFrom: '',
-      endTo: '',
+      reserved: "",
+      docInfo: "",
+      startFrom: "",
+      endTo: "",
     };
   },
 
@@ -114,11 +114,11 @@ export default {
   methods: {
     getDocById() {
       const data = new FormData();
-      data.append('id', this.docId);
+      data.append("id", this.docId);
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/getDoctorById',
+        "http://server.parkviewappointment.com/parkview/reception/getDoctorById",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
@@ -130,13 +130,13 @@ export default {
     },
     getSerial() {
       const data = new FormData();
-      data.append('doctor', this.docId);
-      data.append('day', this.day);
-      data.append('session', this.session);
+      data.append("doctor", this.docId);
+      data.append("day", this.day);
+      data.append("session", this.session);
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/getSerial',
+        "http://server.parkviewappointment.com/parkview/reception/getSerial",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
@@ -153,21 +153,26 @@ export default {
 
     getDocAppointment() {
       const data = new FormData();
-      data.append('id', this.docId);
-      data.append('day', this.day);
-      data.append('session', this.session);
+      data.append("id", this.docId);
+      data.append("day", this.day);
+      data.append("session", this.session);
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/getDocAppointment',
+        "http://server.parkviewappointment.com/parkview/reception/getDocAppointment",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
         .then((res) => res.json())
         .then((res) => {
+          var newsl = "";
           res.rappointment.map((item) => {
-            this.reserved = this.reserved + item.serial + ',';
+            newsl = newsl + item.serial + ",";
           });
+
+          this.reserved = "," + this.reserved + "," + newsl;
+
+          console.log(this.reserved);
         })
         .catch((err) => console.log(err.message));
     },
@@ -175,7 +180,7 @@ export default {
     handleValue(index) {
       var period =
         this.addMinutes(Number(this.min) * (index - 1)) +
-        '-' +
+        "-" +
         this.addMinutes(Number(this.min) * index);
       console.log(period);
       this.setData(index, period);
@@ -183,7 +188,7 @@ export default {
     },
 
     addMinutes(minutes) {
-      var date = this.visitDate + ':' + this.startFrom;
+      var date = this.visitDate + ":" + this.startFrom;
       var newDate = new Date(date);
       newDate = new Date(newDate.getTime() + minutes * 60000);
       return this.DateFormat(newDate);
@@ -197,11 +202,11 @@ export default {
       hours = hours % 12 || 12;
 
       if (hours < 10) {
-        hours = '0' + hours;
+        hours = "0" + hours;
       }
       var minutes = date.getMinutes();
-      minutes = minutes < 10 ? '0' + minutes : minutes;
-      var strTime = hours + ':' + minutes;
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      var strTime = hours + ":" + minutes;
       return strTime;
     },
   },
