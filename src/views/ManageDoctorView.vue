@@ -275,7 +275,10 @@
                                 class="d-flex"
                                 style="width: 80px"
                               >
-                                <div class="led m-1" style="background-color:red"></div>
+                                <div
+                                  class="led m-1"
+                                  style="background-color: red"
+                                ></div>
                                 <p>Inactive</p>
                               </div>
                             </center>
@@ -394,26 +397,26 @@
   <Footer />
 </template>
 <script>
-import TopNav from "../components/TopNav.vue";
-import DashboardNav from "../components/DashboardNav.vue";
-import Modal from "@/components/Modal.vue";
-import Footer from "@/components/Footer.vue";
-import { ref } from "vue";
-import BasicInfo from "@/components/BasicInfo.vue";
-import ConsultancyPeriod from "../components/ConsultancyPeriod.vue";
-import UserInfo from "@/components/UserInfo.vue";
-import Department from "@/modal/newDepartment.vue";
-import DocModal from "@/modal/docModal.vue";
-import { useToast } from "vue-toastification";
+import TopNav from '../components/TopNav.vue';
+import DashboardNav from '../components/DashboardNav.vue';
+import Modal from '@/components/Modal.vue';
+import Footer from '@/components/Footer.vue';
+import { ref } from 'vue';
+import BasicInfo from '@/components/BasicInfo.vue';
+import ConsultancyPeriod from '../components/ConsultancyPeriod.vue';
+import UserInfo from '@/components/UserInfo.vue';
+import Department from '@/modal/newDepartment.vue';
+import DocModal from '@/modal/docModal.vue';
+import { useToast } from 'vue-toastification';
 
 export default {
-  props: ["manageDoc"],
+  props: ['manageDoc'],
 
   data() {
     return {
       appointments: [],
-      deptSelect: "",
-      doctorSearch: "",
+      deptSelect: '',
+      doctorSearch: '',
       doctorList: [],
       department: [],
       docSchedule: [],
@@ -425,12 +428,12 @@ export default {
       docModal: false,
       activeDoc: 0,
       update: 0,
-      chooseDept: "",
-      chooseDoc: "",
-      max: "",
-      min: "",
-      delid: "",
-      mreserved: "",
+      chooseDept: '',
+      chooseDoc: '',
+      max: '',
+      min: '',
+      delid: '',
+      mreserved: '',
     };
   },
 
@@ -444,18 +447,15 @@ export default {
   methods: {
     delDoc(id) {
       const data = new FormData();
-      data.append("id", id);
-      fetch(
-        "http://server.parkviewappointment.com/parkview/admin/deleteDoctor",
-        {
-          method: "POST",
-          body: data,
-        }
-      )
+      data.append('id', id);
+      fetch(`${process.env.VUE_APP_SERVER_URL}/admin/deleteDoctor`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
           this.update = 1;
-          this.toast.success("Doctor Profile Deleted", {
+          this.toast.success('Doctor Profile Deleted', {
             timeout: 4000,
           });
         })
@@ -465,10 +465,10 @@ export default {
       console.log(this.reserveList);
 
       if (this.reserveList.indexOf(index) > -1) {
-        console.log("delete");
+        console.log('delete');
         this.reserveList.splice(this.reserveList.indexOf(index), 1);
       } else {
-        console.log("pushed");
+        console.log('pushed');
         this.reserveList.push(index);
       }
       console.log(this.reserveList);
@@ -483,7 +483,7 @@ export default {
 
       this.docSchedule.map((item) => {
         if (item.doctorId == this.chooseDoc) {
-          this.mreserved = item.reserved.split(",");
+          this.mreserved = item.reserved.split(',');
         }
       });
 
@@ -497,32 +497,29 @@ export default {
       var date = new Date(date);
       var hours = date.getHours();
       var minutes = date.getMinutes();
-      var ampm = hours >= 12 ? "pm" : "am";
+      var ampm = hours >= 12 ? 'pm' : 'am';
       hours = hours % 12;
       hours = hours ? hours : 12; // the hour "0" should be "12"
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      var strTime = hours + ":" + minutes + " " + ampm;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      var strTime = hours + ':' + minutes + ' ' + ampm;
 
       var month = date.getMonth() + 1;
       if (month < 10) {
-        month = "0" + month;
+        month = '0' + month;
       }
 
       var tdate = date.getDate();
 
       if (tdate < 10) {
-        tdate = "0" + tdate;
+        tdate = '0' + tdate;
       }
 
-      return date.getFullYear() + "-" + month + "-" + tdate;
+      return date.getFullYear() + '-' + month + '-' + tdate;
     },
     getDoctorlist() {
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getDoctor",
-        {
-          method: "POST",
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getDoctor`, {
+        method: 'POST',
+      })
         .then((res) => res.json())
         .then((res) => {
           console.log(res);
@@ -533,12 +530,9 @@ export default {
     },
 
     getAppointment() {
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getAppointment",
-        {
-          method: "POST",
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getAppointment`, {
+        method: 'POST',
+      })
         .then((res) => res.json())
         .then((res) => {
           console.log(res.appointment);
@@ -548,13 +542,10 @@ export default {
     },
     getDepartment() {
       const data = new FormData();
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getDepartment",
-        {
-          method: "POST",
-          body: data,
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getDepartment`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
           this.department = res.message;
@@ -564,19 +555,16 @@ export default {
 
     updateDocreserve() {
       const data = new FormData();
-      data.append("id", this.chooseDoc);
-      data.append("reserved", this.reserveList);
+      data.append('id', this.chooseDoc);
+      data.append('reserved', this.reserveList);
 
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/updateDocreserve",
-        {
-          method: "POST",
-          body: data,
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/updateDocreserve`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
-          this.toast.success("Reservation Updated", {
+          this.toast.success('Reservation Updated', {
             timeout: 4000,
           });
         })
@@ -661,7 +649,7 @@ export default {
       }
     },
   },
-  name: "ManageDoctorView",
+  name: 'ManageDoctorView',
   components: {
     TopNav,
     DashboardNav,

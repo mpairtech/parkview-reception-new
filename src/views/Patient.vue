@@ -235,15 +235,6 @@
                               </button>
 
                               <br />
-
-                              <!-- <button
-                                @click="this.delid = user.id"
-                                class="btn btn-secondary btn-sm rounded-0 w-100"
-                                data-bs-toggle="modal"
-                                data-bs-target="#passChange"
-                              >
-                                Edit Password
-                              </button> -->
                             </td>
                           </template>
                         </tr>
@@ -330,33 +321,33 @@
   <FooterVue />
 </template>
 <script>
-import TopNav from "@/components/TopNav.vue";
-import DashboardNav from "@/components/DashboardNav.vue";
+import TopNav from '@/components/TopNav.vue';
+import DashboardNav from '@/components/DashboardNav.vue';
 
-import { useToast } from "vue-toastification";
-import FooterVue from "@/components/Footer.vue";
+import { useToast } from 'vue-toastification';
+import FooterVue from '@/components/Footer.vue';
 export default {
   components: { TopNav, DashboardNav, FooterVue },
   data() {
     return {
       userData: [],
-      name: "",
-      mobile: "",
-      nid: "",
-      email: "",
-      gender: "",
-      password: "",
-      rpassword: "",
+      name: '',
+      mobile: '',
+      nid: '',
+      email: '',
+      gender: '',
+      password: '',
+      rpassword: '',
       update: 0,
-      delid: "",
+      delid: '',
       preloader: true,
-      message: "",
-      gender: "",
-      oldpass: "",
-      newpass: "",
-      rnewpass: "",
-      searchTerm: "",
-      searchDate: "",
+      message: '',
+      gender: '',
+      oldpass: '',
+      newpass: '',
+      rnewpass: '',
+      searchTerm: '',
+      searchDate: '',
     };
   },
   setup() {
@@ -373,38 +364,35 @@ export default {
   },
   methods: {
     clearFields() {
-      this.name = "";
-      this.mobile = "";
-      this.email = "";
-      this.password = "";
-      this.rnewpass = "";
-      this.nid = "";
+      this.name = '';
+      this.mobile = '';
+      this.email = '';
+      this.password = '';
+      this.rnewpass = '';
+      this.nid = '';
     },
     newPatient() {
       if (this.password != this.rpassword) {
-        alert("Password do not match");
+        alert('Password do not match');
         return false;
       }
       const data = new FormData();
-      data.append("name", this.name);
-      data.append("mobile", this.mobile);
-      data.append("nid", this.nid);
-      data.append("email", this.email);
-      data.append("gender", this.gender);
-      data.append("password", this.password);
+      data.append('name', this.name);
+      data.append('mobile', this.mobile);
+      data.append('nid', this.nid);
+      data.append('email', this.email);
+      data.append('gender', this.gender);
+      data.append('password', this.password);
 
-      fetch(
-        "http://server.parkviewappointment.com/parkview/patient/newPatient",
-        {
-          method: "POST",
-          body: data,
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/patient/newPatient`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
           if (res.message == null) {
             this.clearFields();
-            this.toast.success("New Patient Added", {
+            this.toast.success('New Patient Added', {
               timeout: 1000,
             });
             this.update = 1;
@@ -418,14 +406,11 @@ export default {
     },
     delUser(id) {
       const data = new FormData();
-      data.append("id", id);
-      fetch(
-        "http://server.parkviewappointment.com/parkview/admin/deletePatient",
-        {
-          method: "POST",
-          body: data,
-        }
-      )
+      data.append('id', id);
+      fetch(`${process.env.VUE_APP_SERVER_URL}/admin/deletePatient`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
           this.update = 1;
@@ -434,12 +419,9 @@ export default {
     },
 
     getUser() {
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getPatient",
-        {
-          method: "POST",
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getPatient`, {
+        method: 'POST',
+      })
         .then((res) => res.json())
         .then((res) => {
           this.preloader = false;
@@ -449,43 +431,40 @@ export default {
     },
 
     updatePass() {
-      if (this.oldpass == "") {
-        this.toast.success("Password field is empty", {
+      if (this.oldpass == '') {
+        this.toast.success('Password field is empty', {
           timeout: 4000,
         });
         return false;
       }
 
-      if (this.newpass == "") {
-        this.toast.success("New Password field is empty", {
+      if (this.newpass == '') {
+        this.toast.success('New Password field is empty', {
           timeout: 4000,
         });
         return false;
       }
 
       if (this.newpass != this.rnewpass) {
-        this.toast.warning("Password do not match", {
+        this.toast.warning('Password do not match', {
           timeout: 4000,
         });
         return false;
       }
 
       const data = new FormData();
-      data.append("opass", this.oldpass);
-      data.append("pass", this.newpass);
-      data.append("uid", this.delid);
+      data.append('opass', this.oldpass);
+      data.append('pass', this.newpass);
+      data.append('uid', this.delid);
 
-      fetch(
-        "http://server.parkviewappointment.com/parkview/admin/updatepatientPass",
-        {
-          method: "POST",
-          body: data,
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/admin/updatepatientPass`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
           if (res.message == true) {
-            this.toast.success("User Password Updated", {
+            this.toast.success('User Password Updated', {
               timeout: 4000,
             });
           } else {
@@ -502,7 +481,7 @@ export default {
     this.getUser();
     var month = new Date().getMonth();
     month = Number(month) + 1;
-    this.searchDate = new Date().getFullYear() + "-" + month;
+    this.searchDate = new Date().getFullYear() + '-' + month;
   },
 
   computed: {

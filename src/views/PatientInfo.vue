@@ -68,7 +68,13 @@
                               .includes(this.fdate.toString())
                           "
                         >
-                          <td class="border-0">{{ appointment.patientId == 0 ? appointment.id : appointment.patientId }}</td>
+                          <td class="border-0">
+                            {{
+                              appointment.patientId == 0
+                                ? appointment.id
+                                : appointment.patientId
+                            }}
+                          </td>
                           <td class="border-0">{{ appointment.name }}</td>
                           <td class="border-0">{{ appointment.doctor }}</td>
                           <td class="border-0">{{ appointment.department }}</td>
@@ -233,12 +239,9 @@ export default {
       return date.getFullYear() + '-' + month + '-' + tdate;
     },
     getAppointment() {
-      fetch(
-        'http://server.parkviewappointment.com/parkview/reception/getAppointment',
-        {
-          method: 'POST',
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getAppointment`, {
+        method: 'POST',
+      })
         .then((res) => res.json())
         .then((res) => {
           this.appointments = res.appointment;
@@ -248,13 +251,10 @@ export default {
 
     getDepartment() {
       const data = new FormData();
-      fetch(
-        'http://server.parkviewappointment.com/parkview/reception/getDepartment',
-        {
-          method: 'POST',
-          body: data,
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getDepartment`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
           this.department = res.message;

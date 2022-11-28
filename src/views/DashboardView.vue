@@ -200,25 +200,25 @@
 </template>
 
 <script>
-import TopNav from "../components/TopNav.vue";
-import Footer from "@/components/Footer.vue";
+import TopNav from '../components/TopNav.vue';
+import Footer from '@/components/Footer.vue';
 export default {
   data() {
     return {
-      deptSelect: "",
+      deptSelect: '',
       doctorList: [],
       docSchedule: [],
       department: [],
-      doctorSearch: "",
-      doctorSelect: "",
+      doctorSearch: '',
+      doctorSelect: '',
       docAppointments: [],
-      thisDay: "",
-      wdays: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
-      docDeptSelect: "",
-      toDay: "",
+      thisDay: '',
+      wdays: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+      docDeptSelect: '',
+      toDay: '',
     };
   },
-  name: "DashboardView",
+  name: 'DashboardView',
   components: { TopNav, Footer },
 
   mounted() {
@@ -231,12 +231,9 @@ export default {
   },
   methods: {
     getDocAppointment() {
-      fetch(
-        "http://server.parkviewappointment.com/parkview/admin/getAppointmentInfo",
-        {
-          method: "POST",
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/admin/getAppointmentInfo`, {
+        method: 'POST',
+      })
         .then((res) => res.json())
         .then((res) => {
           this.docAppointments = res.appointment;
@@ -245,12 +242,9 @@ export default {
         .catch((err) => console.log(err));
     },
     getDoctorlist() {
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getDoctor",
-        {
-          method: "POST",
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getDoctor`, {
+        method: 'POST',
+      })
         .then((res) => res.json())
         .then((res) => {
           this.doctorList = res.doctors;
@@ -261,13 +255,10 @@ export default {
 
     getDepartment() {
       const data = new FormData();
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getDepartment",
-        {
-          method: "POST",
-          body: data,
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getDepartment`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
           this.department = res.message;
@@ -280,24 +271,24 @@ export default {
       var date = new Date(date);
       var hours = date.getHours();
       var minutes = date.getMinutes();
-      var ampm = hours >= 12 ? "pm" : "am";
+      var ampm = hours >= 12 ? 'pm' : 'am';
       hours = hours % 12;
       hours = hours ? hours : 12; // the hour "0" should be "12"
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      var strTime = hours + ":" + minutes + " " + ampm;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      var strTime = hours + ':' + minutes + ' ' + ampm;
 
       var month = date.getMonth() + 1;
       if (month < 10) {
-        month = "0" + month;
+        month = '0' + month;
       }
 
       var tdate = date.getDate();
 
       if (tdate < 10) {
-        tdate = "0" + tdate;
+        tdate = '0' + tdate;
       }
 
-      return date.getFullYear() + "-" + month + "-" + tdate;
+      return date.getFullYear() + '-' + month + '-' + tdate;
     },
   },
 
@@ -317,20 +308,19 @@ export default {
     filteredDoc() {
       return this.docAppointments?.filter((post) => {
         if (
-          post.period == "single" &&
+          post.period == 'single' &&
           post.startDate.toString().includes(this.toDay.toString())
         ) {
           return false;
         }
 
         if (
-          post.period == "more" &&
+          post.period == 'more' &&
           this.toDay > post.startDate &&
           post.endDate > this.toDay
         ) {
           return false;
         }
-
 
         if (
           post.day

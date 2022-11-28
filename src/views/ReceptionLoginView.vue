@@ -42,15 +42,15 @@
   <Loading :active="dLoading" />
 </template>
 <script>
-import Loading from "@/common/loading.vue";
-import { useToast } from "vue-toastification";
+import Loading from '@/common/loading.vue';
+import { useToast } from 'vue-toastification';
 
 export default {
-  name: "Reception Login",
+  name: 'Reception Login',
   data() {
     return {
-      phone: "",
-      password: "",
+      phone: '',
+      password: '',
       dLoading: false,
     };
   },
@@ -65,22 +65,19 @@ export default {
   },
   methods: {
     checkLogin() {
-      if (localStorage.getItem("token") != null) {
+      if (localStorage.getItem('token') != null) {
         const data = new FormData();
-        data.append("token", localStorage.getItem("token"));
-        fetch(
-          "http://server.parkviewappointment.com/parkview/reception/checkinfo",
-          {
-            method: "POST",
-            body: data,
-          }
-        )
+        data.append('token', localStorage.getItem('token'));
+        fetch(`${process.env.VUE_APP_SERVER_URL}/reception/checkinfo`, {
+          method: 'POST',
+          body: data,
+        })
           .then((res) => res.json())
           .then((res) => {
             if (res.valid) {
-              this.$router.push({ path: "/dashboard", replace: true });
+              this.$router.push({ path: '/dashboard', replace: true });
             } else {
-              localStorage.removeItem("token");
+              localStorage.removeItem('token');
             }
           })
           .catch((err) => console.log(err.message));
@@ -90,20 +87,20 @@ export default {
       this.dLoading = true;
       console.log(this.phone + this.password);
       const data = new FormData();
-      data.append("phone", this.phone);
-      data.append("password", this.password);
-      fetch("http://server.parkviewappointment.com/parkview/reception/login", {
-        method: "POST",
+      data.append('phone', this.phone);
+      data.append('password', this.password);
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/login`, {
+        method: 'POST',
         body: data,
       })
         .then((res) => res.json())
         .then((res) => {
           this.dLoading = false;
           if (res.message == true) {
-            localStorage.setItem("token", res.token);
-            this.$router.push({ path: "/dashboard", replace: true });
+            localStorage.setItem('token', res.token);
+            this.$router.push({ path: '/dashboard', replace: true });
           } else {
-            this.toast.error("Email or password incorrect", {
+            this.toast.error('Email or password incorrect', {
               timeout: 4000,
             });
           }

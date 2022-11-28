@@ -334,37 +334,37 @@
   <FooterVue />
 </template>
 <script>
-import TopNav from "../components/TopNav.vue";
-import DashboardNav from "../components/DashboardNav.vue";
-import FooterVue from "@/components/Footer.vue";
-import { useToast } from "vue-toastification";
+import TopNav from '../components/TopNav.vue';
+import DashboardNav from '../components/DashboardNav.vue';
+import FooterVue from '@/components/Footer.vue';
+import { useToast } from 'vue-toastification';
 export default {
-  name: "DocAppointmentListView",
+  name: 'DocAppointmentListView',
   components: { TopNav, DashboardNav, FooterVue },
   data() {
     return {
-      dept: "",
+      dept: '',
       doctorList: [],
       docSchedule: [],
       appointments: [],
       appointmentsList: [],
       department: [],
-      wdays: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
-      docId: "",
-      deptname: "",
-      session: "",
-      visitDate: "",
-      delid: "",
-      toDay: "",
-      thisDay: "",
+      wdays: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+      docId: '',
+      deptname: '',
+      session: '',
+      visitDate: '',
+      delid: '',
+      toDay: '',
+      thisDay: '',
       update: 0,
-      docDeptSelect: "",
+      docDeptSelect: '',
 
-      visitDatestart: "",
-      visitDateend: "",
+      visitDatestart: '',
+      visitDateend: '',
 
-      excelName: "PatientInfo.xls",
-      uri: "data:application/vnd.ms-excel;base64,",
+      excelName: 'PatientInfo.xls',
+      uri: 'data:application/vnd.ms-excel;base64,',
       template:
         '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
       base64: function (s) {
@@ -406,28 +406,25 @@ export default {
   methods: {
     tableToExcel(table, name) {
       if (!table.nodeType) table = this.$refs.table;
-      var ctx = { worksheet: name || "Worksheet", table: table.innerHTML };
-      var link = document.createElement("a");
-      link.download = !this.excelName.split(".").pop().length
-        ? this.excelName + ".xls"
+      var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML };
+      var link = document.createElement('a');
+      link.download = !this.excelName.split('.').pop().length
+        ? this.excelName + '.xls'
         : this.excelName;
       link.href = this.uri + this.base64(this.format(this.template, ctx));
       link.click();
     },
     delAppo(id) {
       const data = new FormData();
-      data.append("id", id);
-      fetch(
-        "http://server.parkviewappointment.com/parkview/admin/deleteAppointment",
-        {
-          method: "POST",
-          body: data,
-        }
-      )
+      data.append('id', id);
+      fetch(`${process.env.VUE_APP_SERVER_URL}/admin/deleteAppointment`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
           this.update = 1;
-          this.toast.success("Appointment Cancelled", {
+          this.toast.success('Appointment Cancelled', {
             timeout: 4000,
           });
         })
@@ -437,24 +434,24 @@ export default {
       var date = new Date(date);
       var hours = date.getHours();
       var minutes = date.getMinutes();
-      var ampm = hours >= 12 ? "pm" : "am";
+      var ampm = hours >= 12 ? 'pm' : 'am';
       hours = hours % 12;
       hours = hours ? hours : 12; // the hour "0" should be "12"
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      var strTime = hours + ":" + minutes + " " + ampm;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      var strTime = hours + ':' + minutes + ' ' + ampm;
 
       var month = Number(date.getMonth()) + 1;
       var today = Number(date.getDate());
 
       if (month < 10) {
-        month = "0" + month;
+        month = '0' + month;
       }
 
       if (today < 10) {
-        today = "0" + today;
+        today = '0' + today;
       }
 
-      return date.getFullYear() + "-" + month + "-" + today;
+      return date.getFullYear() + '-' + month + '-' + today;
     },
     getDeptname() {
       this.department.map((item) => {
@@ -464,12 +461,9 @@ export default {
       });
     },
     getDoctorlist() {
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getDoctor",
-        {
-          method: "POST",
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getDoctor`, {
+        method: 'POST',
+      })
         .then((res) => res.json())
         .then((res) => {
           this.doctorList = res.doctors;
@@ -479,12 +473,9 @@ export default {
     },
 
     getAppointment() {
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getAppointment",
-        {
-          method: "POST",
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getAppointment`, {
+        method: 'POST',
+      })
         .then((res) => res.json())
         .then((res) => {
           this.appointmentsList = res.appointment;
@@ -493,12 +484,9 @@ export default {
         .catch((err) => console.log(err));
     },
     getAppointmentList() {
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getAppointmentList",
-        {
-          method: "POST",
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getAppointmentList`, {
+        method: 'POST',
+      })
         .then((res) => res.json())
         .then((res) => {
           this.appointments = res.appointment;
@@ -507,13 +495,10 @@ export default {
     },
     getDepartment() {
       const data = new FormData();
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getDepartment",
-        {
-          method: "POST",
-          body: data,
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getDepartment`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
           this.department = res.message;
@@ -546,7 +531,7 @@ export default {
               this.visitDatestart.includes(post.visitDate)) &&
             (post.visitDate < this.visitDateend ||
               this.visitDateend.includes(post.visitDate))) ||
-          this.visitDatestart == ""
+          this.visitDatestart == ''
         ) {
           return post;
         }
@@ -556,14 +541,14 @@ export default {
     availableDoc() {
       return this.doctorList.map((item) => {
         if (
-          item.period == "single" &&
+          item.period == 'single' &&
           item.startDate.toString().includes(this.toDay.toString())
         ) {
           return false;
         }
 
         if (
-          item.period == "more" &&
+          item.period == 'more' &&
           this.toDay > item.startDate &&
           item.endDate > this.toDay
         ) {

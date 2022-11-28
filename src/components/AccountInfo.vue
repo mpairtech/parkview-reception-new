@@ -70,19 +70,19 @@
 </template>
 
 <script>
-import { useToast } from "vue-toastification";
+import { useToast } from 'vue-toastification';
 export default {
-  name: "Accounts Info",
-  props: ["next", "docId"],
+  name: 'Accounts Info',
+  props: ['next', 'docId'],
   data() {
     return {
       docInfo: [],
-      email: "",
-      phoneNo: "",
-      password: "",
-      repassword: "",
+      email: '',
+      phoneNo: '',
+      password: '',
+      repassword: '',
       load: false,
-      message: "",
+      message: '',
     };
   },
 
@@ -98,15 +98,12 @@ export default {
   methods: {
     getDoctorInfo() {
       const data = new FormData();
-      data.append("id", this.docId);
+      data.append('id', this.docId);
 
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getDoctorById",
-        {
-          method: "POST",
-          body: data,
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getDoctorById`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
           this.docInfo = res.message;
@@ -117,22 +114,19 @@ export default {
     newDocpost() {
       this.load = true;
       var data = new FormData();
-      data.append("docId", this.docId);
-      data.append("email", this.email);
-      data.append("phone", this.phoneNo);
-      data.append("password", this.password);
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/postNewDoctor",
-        {
-          method: "POST",
-          body: data,
-        }
-      )
+      data.append('docId', this.docId);
+      data.append('email', this.email);
+      data.append('phone', this.phoneNo);
+      data.append('password', this.password);
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/postNewDoctor`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
           this.load = false;
           if (res.message == null) {
-            this.$router.push({ path: "/managedoctor", replace: true });
+            this.$router.push({ path: '/managedoctor', replace: true });
           } else {
             this.toast.success(res.message, {
               timeout: 1000,
@@ -143,53 +137,50 @@ export default {
     },
 
     makeSave() {
-      if (this.email == "") {
-        this.message = "*Required Field";
-        this.toast.error("Add Accounts info properly", {
+      if (this.email == '') {
+        this.message = '*Required Field';
+        this.toast.error('Add Accounts info properly', {
           timeout: 4000,
         });
         return false;
       }
-      if (this.phoneNo == "") {
-        this.message = "*Required Field";
-        this.toast.error("Add Accounts info properly", {
+      if (this.phoneNo == '') {
+        this.message = '*Required Field';
+        this.toast.error('Add Accounts info properly', {
           timeout: 4000,
         });
         return false;
       }
-      if (this.password == "") {
-        this.message = "*Required Field";
-        this.toast.error("Add Accounts info properly", {
+      if (this.password == '') {
+        this.message = '*Required Field';
+        this.toast.error('Add Accounts info properly', {
           timeout: 4000,
         });
         return false;
       }
-      if (this.repassword == "") {
-        this.message = "*Required Field";
-        this.toast.error("Add Accounts info properly", {
+      if (this.repassword == '') {
+        this.message = '*Required Field';
+        this.toast.error('Add Accounts info properly', {
           timeout: 4000,
         });
         return false;
       }
 
       if (this.password != this.repassword) {
-        this.toast.error("Password do not match", {
+        this.toast.error('Password do not match', {
           timeout: 4000,
         });
         return false;
       }
 
       var data = new FormData();
-      data.append("email", this.email);
-      data.append("phone", this.phoneNo);
+      data.append('email', this.email);
+      data.append('phone', this.phoneNo);
 
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/checkPhoneMail",
-        {
-          method: "POST",
-          body: data,
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/checkPhoneMail`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
           if (res.message) {

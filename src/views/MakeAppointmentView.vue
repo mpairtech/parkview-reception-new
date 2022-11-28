@@ -345,15 +345,15 @@
   <FooterVue />
 </template>
 <script>
-import TopNav from "../components/TopNav.vue";
-import DashboardNav from "../components/DashboardNav.vue";
-import FooterVue from "@/components/Footer.vue";
-import { ref } from "vue";
-import ModalSche from "@/modal/modalSche.vue";
-import Loading from "@/common/loading.vue";
-import { useToast } from "vue-toastification";
+import TopNav from '../components/TopNav.vue';
+import DashboardNav from '../components/DashboardNav.vue';
+import FooterVue from '@/components/Footer.vue';
+import { ref } from 'vue';
+import ModalSche from '@/modal/modalSche.vue';
+import Loading from '@/common/loading.vue';
+import { useToast } from 'vue-toastification';
 export default {
-  name: "MakeAppointmentView",
+  name: 'MakeAppointmentView',
   components: {
     TopNav,
     DashboardNav,
@@ -364,34 +364,34 @@ export default {
   },
   data() {
     return {
-      name: "",
-      number: "",
-      age: "",
-      dept: "",
-      doctor: "",
-      visitDate: "",
-      visitDay: "",
-      vistSession: "",
-      serial: "",
-      period: "",
-      max: "",
-      min: "",
-      toDay: "",
+      name: '',
+      number: '',
+      age: '',
+      dept: '',
+      doctor: '',
+      visitDate: '',
+      visitDay: '',
+      vistSession: '',
+      serial: '',
+      period: '',
+      max: '',
+      min: '',
+      toDay: '',
       update: 0,
-      startFrom: "",
-      deptname: "",
+      startFrom: '',
+      deptname: '',
       overview: false,
       load: false,
       doctorList: [],
       docSchedule: [],
       department: [],
       appointments: [],
-      wdays: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
+      wdays: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
       showDatepicker: false,
-      message: "",
-      advance: "",
+      message: '',
+      advance: '',
       availAbleList: [],
-      thisday: "",
+      thisday: '',
     };
   },
 
@@ -440,13 +440,13 @@ export default {
       console.log(this.availAbleList);
     },
     clearField() {
-      this.name = "";
-      this.number = "";
-      this.age = "";
-      this.dept = "";
-      this.visitDay = "";
-      this.doctor = "";
-      this.visitDate = "";
+      this.name = '';
+      this.number = '';
+      this.age = '';
+      this.dept = '';
+      this.visitDay = '';
+      this.doctor = '';
+      this.visitDate = '';
       this.overview = false;
     },
 
@@ -460,23 +460,23 @@ export default {
     },
 
     postAppointment() {
-      if (this.name == "") {
-        this.message = "*Required Field";
-        this.toast.error("Please fill out all the fields", {
+      if (this.name == '') {
+        this.message = '*Required Field';
+        this.toast.error('Please fill out all the fields', {
           timeout: 4000,
         });
         return false;
       }
-      if (this.number == "") {
-        this.message = "*Required Field";
-        this.toast.error("Please fill out all the fields", {
+      if (this.number == '') {
+        this.message = '*Required Field';
+        this.toast.error('Please fill out all the fields', {
           timeout: 4000,
         });
         return false;
       }
-      if (this.age == "") {
-        this.message = "*Required Field";
-        this.toast.error("Please fill out all the fields", {
+      if (this.age == '') {
+        this.message = '*Required Field';
+        this.toast.error('Please fill out all the fields', {
           timeout: 4000,
         });
         return false;
@@ -484,24 +484,21 @@ export default {
 
       this.load = true;
       const data = new FormData();
-      data.append("name", this.name);
-      data.append("number", this.number);
-      data.append("age", this.age);
-      data.append("department", this.dept);
-      data.append("doctor", this.doctor);
-      data.append("visitDate", this.convertDate(this.visitDate));
-      data.append("visitDay", this.visitDay);
-      data.append("visitSession", this.visitSession);
-      data.append("serial", this.serial);
-      data.append("period", this.period);
+      data.append('name', this.name);
+      data.append('number', this.number);
+      data.append('age', this.age);
+      data.append('department', this.dept);
+      data.append('doctor', this.doctor);
+      data.append('visitDate', this.convertDate(this.visitDate));
+      data.append('visitDay', this.visitDay);
+      data.append('visitSession', this.visitSession);
+      data.append('serial', this.serial);
+      data.append('period', this.period);
 
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/postAppointment",
-        {
-          method: "POST",
-          body: data,
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/postAppointment`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
           this.clearField();
@@ -512,12 +509,9 @@ export default {
     },
 
     getDoctorlist() {
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getDoctor",
-        {
-          method: "POST",
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getDoctor`, {
+        method: 'POST',
+      })
         .then((res) => res.json())
         .then((res) => {
           this.doctorList = res.doctors;
@@ -527,12 +521,9 @@ export default {
     },
 
     getAppointment() {
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getAppointmentLast",
-        {
-          method: "POST",
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getAppointmentLast`, {
+        method: 'POST',
+      })
         .then((res) => res.json())
         .then((res) => {
           this.appointments = res.appointment;
@@ -542,13 +533,10 @@ export default {
 
     getDepartment() {
       const data = new FormData();
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getDepartment",
-        {
-          method: "POST",
-          body: data,
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getDepartment`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
           console.log(res.message);
@@ -565,7 +553,7 @@ export default {
     getSerialSuggetion() {
       var result = new Date();
 
-      if (this.visitDay != "") {
+      if (this.visitDay != '') {
         this.availAbleList.map((item, index) => {
           if (item.toLowerCase().includes(this.visitDay.toLocaleLowerCase())) {
             result.setDate(result.getDate() + index);
@@ -574,18 +562,18 @@ export default {
         });
       }
 
-      if (this.convertDate(this.visitDate) === "NaN-NaN-NaN") {
+      if (this.convertDate(this.visitDate) === 'NaN-NaN-NaN') {
       } else {
         this.showDatepicker = false;
         this.load = true;
         const data = new FormData();
-        data.append("doctor", this.doctor);
-        data.append("day", this.visitDay);
-        data.append("session", this.visitSession);
+        data.append('doctor', this.doctor);
+        data.append('day', this.visitDay);
+        data.append('session', this.visitSession);
         fetch(
-          "http://server.parkviewappointment.com/parkview/reception/getSerialSuggetion",
+          `${process.env.VUE_APP_SERVER_URL}/reception/getSerialSuggetion`,
           {
-            method: "POST",
+            method: 'POST',
             body: data,
           }
         )
@@ -593,8 +581,7 @@ export default {
           .then((res) => {
             var A = [];
 
-            var newArr = res.reserved.split(",");
-
+            var newArr = res.reserved.split(',');
 
             for (var i = 1; i <= this.max; i++) {
               // if (res.reserved.includes(i + ",")) {
@@ -602,14 +589,11 @@ export default {
               //   A.push(i);
               // }
 
-              if(newArr.includes(i.toString())){
-
+              if (newArr.includes(i.toString())) {
               } else {
                 A.push(i);
               }
             }
-
-            
 
             const B = res.serial;
 
@@ -621,11 +605,11 @@ export default {
             if (this.serial != undefined) {
               this.period =
                 this.addMinutes(Number(this.min) * (Number(this.serial) - 1)) +
-                "-" +
+                '-' +
                 this.addMinutes(Number(this.min) * Number(this.serial));
               this.overview = true;
             } else {
-              this.period = "No serial available";
+              this.period = 'No serial available';
               this.overview = true;
             }
           })
@@ -650,11 +634,11 @@ export default {
           this.advance = item.advanced;
 
           this.availAbleList = [];
-          this.visitDate = "";
-          this.visitDay = "";
-          this.visitSession = "";
-          this.serial = "";
-          this.period = "";
+          this.visitDate = '';
+          this.visitDay = '';
+          this.visitSession = '';
+          this.serial = '';
+          this.period = '';
         }
       });
 
@@ -662,7 +646,7 @@ export default {
     },
 
     addMinutes(minutes) {
-      var date = this.convertDate(this.visitDate) + ":" + this.startFrom;
+      var date = this.convertDate(this.visitDate) + ':' + this.startFrom;
       var newDate = new Date(date);
       newDate = new Date(newDate.getTime() + minutes * 60000);
       return this.DateFormat(newDate);
@@ -676,11 +660,11 @@ export default {
       hours = hours % 12 || 12;
 
       if (hours < 10) {
-        hours = "0" + hours;
+        hours = '0' + hours;
       }
       var minutes = date.getMinutes();
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      var strTime = hours + ":" + minutes;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      var strTime = hours + ':' + minutes;
       return strTime;
     },
 
@@ -688,33 +672,33 @@ export default {
       var date = new Date(date);
       var hours = date.getHours();
       var minutes = date.getMinutes();
-      var ampm = hours >= 12 ? "pm" : "am";
+      var ampm = hours >= 12 ? 'pm' : 'am';
       hours = hours % 12;
       hours = hours ? hours : 12; // the hour "0" should be "12"
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      var strTime = hours + ":" + minutes + " " + ampm;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      var strTime = hours + ':' + minutes + ' ' + ampm;
 
       var month = date.getMonth() + 1;
       if (month < 10) {
-        month = "0" + month;
+        month = '0' + month;
       }
 
       var tdate = date.getDate();
 
       if (tdate < 10) {
-        tdate = "0" + tdate;
+        tdate = '0' + tdate;
       }
 
-      return date.getFullYear() + "-" + month + "-" + tdate;
+      return date.getFullYear() + '-' + month + '-' + tdate;
     },
 
     convertDate(inputFormat) {
       function pad(s) {
-        return s < 10 ? "0" + s : s;
+        return s < 10 ? '0' + s : s;
       }
       var d = new Date(inputFormat);
       return [d.getFullYear(), pad(d.getMonth() + 1), pad(d.getDate())].join(
-        "-"
+        '-'
       );
     },
   },
@@ -731,14 +715,14 @@ export default {
     filteredList() {
       return this.doctorList?.filter((post) => {
         if (
-          post.period == "single" &&
+          post.period == 'single' &&
           post.startDate.toString().includes(this.thisday.toString())
         ) {
           return false;
         }
 
         if (
-          post.period == "more" &&
+          post.period == 'more' &&
           this.thisday > post.startDate &&
           post.endDate > this.thisday
         ) {

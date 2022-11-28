@@ -152,13 +152,10 @@ export default {
       data.append('pass', this.newpass);
       data.append('token', localStorage.getItem('token'));
 
-      fetch(
-        'http://server.parkviewappointment.com/parkview/reception/updatePass',
-        {
-          method: 'POST',
-          body: data,
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/updatePass`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
           if (res.message == true) {
@@ -177,13 +174,10 @@ export default {
   mounted() {
     const data = new FormData();
     data.append('token', localStorage.getItem('token'));
-    fetch(
-      'http://server.parkviewappointment.com/parkview/reception/getCheckinfo',
-      {
-        method: 'POST',
-        body: data,
-      }
-    )
+    fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getCheckinfo`, {
+      method: 'POST',
+      body: data,
+    })
       .then((res) => res.json())
       .then((res) => {
         this.recInfo = res.message;

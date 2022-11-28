@@ -127,27 +127,27 @@
 </template>
 
 <script>
-import Loading from "@/common/loading.vue";
-import { useToast } from "vue-toastification";
+import Loading from '@/common/loading.vue';
+import { useToast } from 'vue-toastification';
 export default {
-  name: "DoctorInfo",
-  props: ["next", "docId", "max"],
+  name: 'DoctorInfo',
+  props: ['next', 'docId', 'max'],
   data() {
     return {
       department: [],
-      advanced: "0",
-      dept: "",
-      docName: "",
-      qualification: "",
-      roomNo: "",
-      consFee: "",
-      maxCons: "",
-      minConsPeriod: "5",
-      image: "",
+      advanced: '0',
+      dept: '',
+      docName: '',
+      qualification: '',
+      roomNo: '',
+      consFee: '',
+      maxCons: '',
+      minConsPeriod: '5',
+      image: '',
       load: false,
-      message: "",
+      message: '',
       preview: false,
-      url: "",
+      url: '',
     };
   },
   mounted() {
@@ -167,13 +167,10 @@ export default {
     },
     getDepartment() {
       const data = new FormData();
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/getDepartment",
-        {
-          method: "POST",
-          body: data,
-        }
-      )
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/getDepartment`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
           this.department = res.message;
@@ -183,78 +180,75 @@ export default {
     makeSave(e) {
       e.preventDefault();
 
-      if (this.docName == "") {
-        this.message = "*Required Field";
-        this.toast.error("Please fill out all the fields", {
+      if (this.docName == '') {
+        this.message = '*Required Field';
+        this.toast.error('Please fill out all the fields', {
           timeout: 4000,
         });
         return false;
       }
 
-      if (this.qualification == "") {
-        this.message = "*Required Field";
-        this.toast.error("Please fill out all the fields", {
+      if (this.qualification == '') {
+        this.message = '*Required Field';
+        this.toast.error('Please fill out all the fields', {
           timeout: 4000,
         });
         return false;
       }
-      if (this.roomNo == "") {
-        this.message = "*Required Field";
-        this.toast.error("Please fill out all the fields", {
+      if (this.roomNo == '') {
+        this.message = '*Required Field';
+        this.toast.error('Please fill out all the fields', {
           timeout: 4000,
         });
         return false;
       }
-      if (this.consFee == "") {
-        this.message = "*Required Field";
-        this.toast.error("Please fill out all the fields", {
+      if (this.consFee == '') {
+        this.message = '*Required Field';
+        this.toast.error('Please fill out all the fields', {
           timeout: 4000,
         });
         return false;
       }
-      if (this.maxCons == "") {
-        this.message = "*Required Field";
-        this.toast.error("Please fill out all the fields", {
+      if (this.maxCons == '') {
+        this.message = '*Required Field';
+        this.toast.error('Please fill out all the fields', {
           timeout: 4000,
         });
         return false;
       }
-      if (this.minConsPeriod == "") {
-        this.message = "*Required Field";
-        this.toast.error("Please fill out all the fields", {
+      if (this.minConsPeriod == '') {
+        this.message = '*Required Field';
+        this.toast.error('Please fill out all the fields', {
           timeout: 4000,
         });
         return false;
       }
 
-      if (this.advanced == "") {
-        this.message = "*Required Field";
-        this.toast.error("Please fill out all the fields", {
+      if (this.advanced == '') {
+        this.message = '*Required Field';
+        this.toast.error('Please fill out all the fields', {
           timeout: 4000,
         });
         return false;
       }
 
       this.load = true;
-      document.getElementById("docFrm").reset();
+      document.getElementById('docFrm').reset();
       const data = new FormData();
-      data.append("doctor", this.docName);
-      data.append("docimage", this.image);
-      data.append("department", this.dept);
-      data.append("qualification", this.qualification);
-      data.append("room", this.roomNo);
-      data.append("fee", this.consFee);
-      data.append("max", this.maxCons);
-      data.append("min", this.minConsPeriod);
-      data.append("advanced", this.advanced);
-      data.append("token", localStorage.getItem("token"));
-      fetch(
-        "http://server.parkviewappointment.com/parkview/reception/postDoctor",
-        {
-          method: "POST",
-          body: data,
-        }
-      )
+      data.append('doctor', this.docName);
+      data.append('docimage', this.image);
+      data.append('department', this.dept);
+      data.append('qualification', this.qualification);
+      data.append('room', this.roomNo);
+      data.append('fee', this.consFee);
+      data.append('max', this.maxCons);
+      data.append('min', this.minConsPeriod);
+      data.append('advanced', this.advanced);
+      data.append('token', localStorage.getItem('token'));
+      fetch(`${process.env.VUE_APP_SERVER_URL}/reception/postDoctor`, {
+        method: 'POST',
+        body: data,
+      })
         .then((res) => res.json())
         .then((res) => {
           if (res.message == null) {

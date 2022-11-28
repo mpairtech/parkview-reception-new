@@ -63,9 +63,9 @@
 </template>
 
 <script>
-import Loading from "@/common/loading.vue";
+import Loading from '@/common/loading.vue';
 export default {
-  name: "TopNav",
+  name: 'TopNav',
   data() {
     return {
       preloader: true,
@@ -77,26 +77,23 @@ export default {
   },
   methods: {
     delDoc() {
-      fetch("http://server.parkviewappointment.com/parkview/admin/delunDoc", {
-        method: "POST",
+      fetch(`${process.env.VUE_APP_SERVER_URL}/admin/delunDoc`, {
+        method: 'POST',
       })
         .then((res) => res.json())
         .then((res) => {})
         .catch((err) => console.log(err));
     },
     checkUser() {
-      if (localStorage.getItem("token") == null) {
-        this.$router.push({ path: "/", replace: true });
+      if (localStorage.getItem('token') == null) {
+        this.$router.push({ path: '/', replace: true });
       } else {
         const data = new FormData();
-        data.append("token", localStorage.getItem("token"));
-        fetch(
-          "http://server.parkviewappointment.com/parkview/reception/checkinfo",
-          {
-            method: "POST",
-            body: data,
-          }
-        )
+        data.append('token', localStorage.getItem('token'));
+        fetch(`${process.env.VUE_APP_SERVER_URL}/reception/checkinfo`, {
+          method: 'POST',
+          body: data,
+        })
           .then((res) => res.json())
           .then((res) => {
             this.preloader = false;
@@ -110,8 +107,8 @@ export default {
       }
     },
     logOut() {
-      localStorage.removeItem("token");
-      this.$router.push({ path: "/", replace: true });
+      localStorage.removeItem('token');
+      this.$router.push({ path: '/', replace: true });
     },
   },
   components: { Loading },
