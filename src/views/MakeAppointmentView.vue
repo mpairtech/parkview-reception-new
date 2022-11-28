@@ -569,7 +569,6 @@ export default {
         this.availAbleList.map((item, index) => {
           if (item.toLowerCase().includes(this.visitDay.toLocaleLowerCase())) {
             result.setDate(result.getDate() + index);
-
             this.visitDate = this.formatDate(result);
           }
         });
@@ -593,18 +592,28 @@ export default {
           .then((res) => res.json())
           .then((res) => {
             var A = [];
+
+            var newArr = res.reserved.split(",");
+
+
             for (var i = 1; i <= this.max; i++) {
-              if (res.reserved.includes("," + i + "")) {
+              // if (res.reserved.includes(i + ",")) {
+              // } else {
+              //   A.push(i);
+              // }
+
+              if(newArr.includes(i.toString())){
+
               } else {
                 A.push(i);
               }
             }
+
+            
+
             const B = res.serial;
 
             this.serial = A.filter((n) => !B.includes(n))[0];
-            // console.log(A.filter((n) => !B.includes(n)));
-
-            console.log(this.serial);
 
             this.startFrom = res.startfrom;
             this.load = false;

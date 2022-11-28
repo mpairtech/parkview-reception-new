@@ -254,10 +254,35 @@
                       >
                         <td class="table-font-size">
                           <strong>{{ doc.doctor }}</strong>
+
+                          <p class="mb-0 font-10">
+                            <center>
+                              <div
+                                v-if="doc.activeStatus == 1"
+                                class="d-flex"
+                                style="width: 80px"
+                              >
+                                <div class="led m-1"></div>
+                                <p>Active Now</p>
+                              </div>
+                            </center>
+                          </p>
+
+                          <p class="mb-0 font-10">
+                            <center>
+                              <div
+                                v-if="doc.activeStatus == 0"
+                                class="d-flex"
+                                style="width: 80px"
+                              >
+                                <div class="led m-1" style="background-color:red"></div>
+                                <p>Inactive</p>
+                              </div>
+                            </center>
+                          </p>
                         </td>
                         <td class="designation-font">
                           {{ doc.qualification }}
-                          Parkview Hospital
                         </td>
                         <td class="table-font-size">
                           <strong>{{ doc.department }}</strong>
@@ -463,8 +488,9 @@ export default {
       });
 
       this.mreserved.map((reserve) => {
-        this.reserveList.push(Number(reserve));
-        console.log(reserve);
+        if (Number(reserve) != 0) {
+          this.reserveList.push(Number(reserve));
+        }
       });
     },
     formatDate(date) {

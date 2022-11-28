@@ -74,7 +74,6 @@ export default {
   },
   mounted() {
     this.checkUser();
-    this.delDoc();
   },
   methods: {
     delDoc() {

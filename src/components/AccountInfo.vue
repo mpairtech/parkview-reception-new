@@ -113,6 +113,35 @@ export default {
         })
         .catch((err) => console.log(err.message));
     },
+
+    newDocpost() {
+      this.load = true;
+      var data = new FormData();
+      data.append("docId", this.docId);
+      data.append("email", this.email);
+      data.append("phone", this.phoneNo);
+      data.append("password", this.password);
+      fetch(
+        "http://server.parkviewappointment.com/parkview/reception/postNewDoctor",
+        {
+          method: "POST",
+          body: data,
+        }
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          this.load = false;
+          if (res.message == null) {
+            this.$router.push({ path: "/managedoctor", replace: true });
+          } else {
+            this.toast.success(res.message, {
+              timeout: 1000,
+            });
+          }
+        })
+        .catch((err) => console.log(err.message));
+    },
+
     makeSave() {
       if (this.email == "") {
         this.message = "*Required Field";
@@ -150,14 +179,12 @@ export default {
         return false;
       }
 
-      this.load = true;
-      const data = new FormData();
-      data.append("docId", this.docId);
+      var data = new FormData();
       data.append("email", this.email);
       data.append("phone", this.phoneNo);
-      data.append("password", this.password);
+
       fetch(
-        "http://server.parkviewappointment.com/parkview/reception/postNewDoc",
+        "http://server.parkviewappointment.com/parkview/reception/checkPhoneMail",
         {
           method: "POST",
           body: data,
@@ -165,11 +192,10 @@ export default {
       )
         .then((res) => res.json())
         .then((res) => {
-          this.load = false;
-          if (res.message == null) {
-            this.$router.push({ path: "/managedoctor", replace: true });
+          if (res.message) {
+            this.newDocpost();
           } else {
-            this.toast.success(res.message, {
+            this.toast.error(res.alert, {
               timeout: 1000,
             });
           }

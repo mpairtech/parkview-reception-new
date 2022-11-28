@@ -40,9 +40,7 @@
                     @click="handleValue(index)"
                     class="btn w-100 border-0 p-0 my-2"
                     :disabled="
-                      this.reserved.includes(',' + index.toString() + ',')
-                        ? true
-                        : false
+                      this.reserved.includes(index.toString()) ? true : false
                     "
                   >
                     <div class="row text-dark fw-light text-center p-0 mb-0">
@@ -88,7 +86,7 @@ export default {
   data() {
     return {
       appointments: [],
-      reserved: "",
+      reserved: [],
       docInfo: "",
       startFrom: "",
       endTo: "",
@@ -143,7 +141,7 @@ export default {
         .then((res) => res.json())
         .then((res) => {
           if (res.schedule.length > 0) {
-            this.reserved = res.schedule[0].reserved;
+            this.reserved = res.schedule[0].reserved.split(",");
             this.startFrom = res.schedule[0].startFrom;
             this.endTo = res.schedule[0].endTo;
           }
@@ -166,13 +164,14 @@ export default {
         .then((res) => res.json())
         .then((res) => {
           var newsl = "";
-          res.rappointment.map((item) => {
-            newsl = newsl + item.serial + ",";
-          });
 
-          this.reserved = "," + this.reserved + "," + newsl;
+          if (res.rappointment != "") {
+            res.rappointment.map((item) => {
+              this.reserved.push(item.serial.toString());
+            });
+          }
 
-          console.log(this.reserved);
+          // this.reserved = "," + this.reserved + "," + newsl;
         })
         .catch((err) => console.log(err.message));
     },

@@ -109,28 +109,28 @@
 </template>
 
 <script>
-import Loading from '@/common/loading.vue';
-import { useToast } from 'vue-toastification';
+import Loading from "@/common/loading.vue";
+import { useToast } from "vue-toastification";
 export default {
-  name: 'Schedule and Reservation',
-  props: ['next', 'docId', 'max'],
+  name: "Schedule and Reservation",
+  props: ["next", "docId", "max"],
   data() {
     return {
-      daySelect: '',
-      sessionSelect: '',
-      days: ['SAT', 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI'],
+      daySelect: "",
+      sessionSelect: "",
+      days: ["SAT", "SUN", "MON", "TUE", "WED", "THU", "FRI"],
       prevSchedule: [],
-      daySelect: '',
-      sessionSelect: '',
-      startTime: '',
-      endTime: '',
+      daySelect: "",
+      sessionSelect: "",
+      startTime: "",
+      endTime: "",
       indexCheck: -1,
       update: 0,
       selectId: 0,
       scheDuleId: 0,
       reserved: [],
       load: false,
-      message: '',
+      message: "",
     };
   },
   mounted() {
@@ -151,30 +151,29 @@ export default {
   methods: {
     selectReserve() {
       if (this.reserved.includes(this.selectId)) {
-        console.log('Already reserved');
+        console.log("Already reserved");
       } else {
         this.reserved.push(this.selectId);
       }
     },
     clearField() {
-      this.daySelect = '';
-      this.sessionSelect = '';
-      this.startTime = '';
-      this.endTime = '';
+      this.daySelect = "";
+      this.sessionSelect = "";
+      this.startTime = "";
+      this.endTime = "";
     },
     getSchedule() {
       const data = new FormData();
-      data.append('doctorId', this.docId);
+      data.append("doctorId", this.docId);
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/getSchedule',
+        "http://server.parkviewappointment.com/parkview/reception/getSchedule",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
         .then((res) => res.json())
         .then((res) => {
-          console.log(res.message);
           this.prevSchedule = res.message;
         })
         .catch((err) => console.log(err.message));
@@ -182,30 +181,30 @@ export default {
     makeSave(e) {
       e.preventDefault();
 
-      if (this.daySelect == '') {
-        this.message = '*Required Field';
-        this.toast.error('Please select Schedule Day', {
+      if (this.daySelect == "") {
+        this.message = "*Required Field";
+        this.toast.error("Please select Schedule Day", {
           timeout: 4000,
         });
         return false;
       }
-      if (this.sessionSelect == '') {
-        this.message = '*Required Field';
-        this.toast.error('Please select Schedule Session', {
+      if (this.sessionSelect == "") {
+        this.message = "*Required Field";
+        this.toast.error("Please select Schedule Session", {
           timeout: 4000,
         });
         return false;
       }
-      if (this.startTime == '') {
-        this.message = '*Required Field';
-        this.toast.error('Please select Start Time', {
+      if (this.startTime == "") {
+        this.message = "*Required Field";
+        this.toast.error("Please select Start Time", {
           timeout: 4000,
         });
         return false;
       }
-      if (this.endTime == '') {
-        this.message = '*Required Field';
-        this.toast.error('Please select End Time', {
+      if (this.endTime == "") {
+        this.message = "*Required Field";
+        this.toast.error("Please select End Time", {
           timeout: 4000,
         });
         return false;
@@ -213,22 +212,21 @@ export default {
 
       this.load = true;
       const data = new FormData();
-      data.append('day', this.daySelect);
-      data.append('session', this.sessionSelect);
-      data.append('startFrom', this.tConvert(this.startTime));
-      data.append('endTo', this.tConvert(this.endTime));
-      data.append('doctorId', this.docId);
-      data.append('reserved', this.reserved);
+      data.append("day", this.daySelect);
+      data.append("session", this.sessionSelect);
+      data.append("startFrom", this.tConvert(this.startTime));
+      data.append("endTo", this.tConvert(this.endTime));
+      data.append("doctorId", this.docId);
+      data.append("reserved", this.reserved);
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/docSchedulePost',
+        "http://server.parkviewappointment.com/parkview/reception/docSchedulePost",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
           this.load = false;
           this.update = 1;
           this.scheDuleId = res.scheId;
@@ -237,9 +235,9 @@ export default {
       this.clearField();
     },
     saveNext() {
-      if (this.prevSchedule == '') {
-        this.message = '*Required';
-        this.toast.error('Please assign a Schedule', {
+      if (this.prevSchedule == "") {
+        this.message = "*Required";
+        this.toast.error("Please assign a Schedule", {
           timeout: 4000,
         });
         return false;
@@ -247,12 +245,12 @@ export default {
 
       this.load = true;
       const data = new FormData();
-      data.append('reserved', this.reserved);
-      data.append('docId', this.docId);
+      data.append("reserved", this.reserved);
+      data.append("docId", this.docId);
       fetch(
-        'http://server.parkviewappointment.com/parkview/reception/docScheduleupdate',
+        "http://server.parkviewappointment.com/parkview/reception/docScheduleupdate",
         {
-          method: 'POST',
+          method: "POST",
           body: data,
         }
       )
@@ -272,10 +270,10 @@ export default {
       if (time.length > 1) {
         // If time format correct
         time = time.slice(1); // Remove full string match value
-        time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+        time[5] = +time[0] < 12 ? " AM" : " PM"; // Set AM/PM
         time[0] = +time[0] % 12 || 12; // Adjust hours
       }
-      return time.join(''); // return adjusted time or original string
+      return time.join(""); // return adjusted time or original string
     },
   },
   components: { Loading },

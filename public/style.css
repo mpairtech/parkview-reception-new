@@ -300,3 +300,11 @@ a {
 .btn {
   border-radius: 0px !important;
 }
+
+.led {
+  background-color: green;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  margin-top: 8px;
+}

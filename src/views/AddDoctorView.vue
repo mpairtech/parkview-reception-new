@@ -60,7 +60,7 @@
                 <AccountInfo :next="changeAcc" :docId="docId" />
               </div>
             </div>
-          </div> 
+          </div>
         </div>
       </div>
     </div>
@@ -69,20 +69,19 @@
   <FooterVue />
 </template>
 <script>
-import TopNav from '../components/TopNav.vue';
-import FooterVue from '@/components/Footer.vue';
-import DoctorInfo from '../components/DoctorInfo.vue';
-import AccountInfo from '../components/AccountInfo.vue';
-import ScheduleReservation from '../components/ScheduleReservation.vue';
+import TopNav from "../components/TopNav.vue";
+import FooterVue from "@/components/Footer.vue";
+import DoctorInfo from "../components/DoctorInfo.vue";
+import AccountInfo from "../components/AccountInfo.vue";
+import ScheduleReservation from "../components/ScheduleReservation.vue";
 
-import DashboardNav from '../components/DashboardNav.vue';
+import DashboardNav from "../components/DashboardNav.vue";
 export default {
   data() {
     return {
-      docDeptSelect: '',
-
-      docInfo: true,
-      scheInfo: false,
+      docDeptSelect: "",
+      docInfo: true,      
+      scheInfo: false,   
       accInfo: false,
       docId: 0,
       max: 0,
@@ -114,7 +113,7 @@ export default {
       this.max = value;
     },
   },
-  name: 'AddDoctorView',
+  name: "AddDoctorView",
   components: {
     TopNav,
     FooterVue,
