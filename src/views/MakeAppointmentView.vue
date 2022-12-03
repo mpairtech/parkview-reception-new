@@ -570,6 +570,7 @@ export default {
         data.append('doctor', this.doctor);
         data.append('day', this.visitDay);
         data.append('session', this.visitSession);
+        data.append('visitDate',this.visitDate);
         fetch(
           `${process.env.VUE_APP_SERVER_URL}/reception/getSerialSuggetion`,
           {
@@ -577,7 +578,7 @@ export default {
             body: data,
           }
         )
-          .then((res) => res.json())
+          .then((res) => res.json())    
           .then((res) => {
             var A = [];
 

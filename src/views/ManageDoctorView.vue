@@ -474,6 +474,7 @@ export default {
       console.log(this.reserveList);
     },
     setMax() {
+      this.reserveList = [];
       this.doctorList.map((item) => {
         if (item.id == this.chooseDoc) {
           this.max = item.max;

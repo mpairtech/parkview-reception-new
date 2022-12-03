@@ -80,7 +80,7 @@ export default {
     "day",
     "session",
     "update",
-    "setupdate",
+    "setupdate",    
     "close",
   ],
   data() {
@@ -154,6 +154,7 @@ export default {
       data.append("id", this.docId);
       data.append("day", this.day);
       data.append("session", this.session);
+      data.append("visitDate", this.visitDate);
       fetch(
         "http://server.parkviewappointment.com/parkview/reception/getDocAppointment",
         {
